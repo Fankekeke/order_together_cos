@@ -3,7 +3,7 @@
     <div class="content">
       <div class="top">
         <div class="header">
-          <img alt="logo" src="static/img/logo.png" height="175"/>
+<!--          <img alt="logo" src="static/img/logo.png" height="175"/>-->
         </div>
         <div class="desc"></div>
       </div>
@@ -48,9 +48,8 @@ export default {
     flex-direction: column;
     height: 100vh;
     overflow: auto;
-    //background: #f0f2f5 url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg') no-repeat center 110px;
-    background: white no-repeat center 110px;
-    background-size: 100%;
+    background: rgb(234, 234, 234) url(../../../static/img/house.jpg) no-repeat center ;
+    background-size: cover;
     .content {
       padding: 32px 0;
       flex: 1;

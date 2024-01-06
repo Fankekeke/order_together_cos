@@ -19,8 +19,8 @@
         ci.on_put AS onPut,
         si.introduction,
         si.tag,
-        ui.name AS userName,
-        ui.images as avatar,
+        ui.user_name AS userName,
+        ui.avatar as avatar,
         su.user_name AS shopName,
         su.avatar AS shopAvatar,
         ai.address,
@@ -36,7 +36,7 @@
         WHERE
         1 = 1
         <if test="orderInfo.userName != null and orderInfo.userName != ''">
-            AND ui.name LIKE CONCAT('%',#{orderInfo.userName},'%')
+            AND ui.user_name LIKE CONCAT('%',#{orderInfo.userName},'%')
         </if>
         <if test="orderInfo.shopName != null and orderInfo.shopName != ''">
             AND su.user_name LIKE CONCAT('%',#{orderInfo.shopName},'%')
@@ -141,8 +141,8 @@
         SELECT
         COUNT( 1 ) AS orderNum,
         IFNULL( SUM( oi.order_price ), 0 ) AS orderPrice,
-        ui.images as avatar,
-        ui.name as userName,
+        ui.avatar as avatar,
+        ui.user_name as userName,
         si.tag,
         si.introduction
         FROM
@@ -176,8 +176,8 @@
     <select id="shopList" resultType="java.util.LinkedHashMap">
         SELECT
         si.id,
-        ui.images as avatar,
-        ui.name AS userName
+        ui.avatar as avatar,
+        ui.user_name AS userName
         FROM
         shop_info si
         LEFT JOIN user_info ui ON ( ui.id = si.user_id )
@@ -197,8 +197,8 @@
         oi.create_date,
         ci.on_put,
         ci.type,
-        ui.name AS userName,
-        ui.images as avatar
+        ui.user_name AS userName,
+        ui.avatar as avatar
         FROM
         order_info oi
         LEFT JOIN commodity_info ci ON ( oi.commodity_id = ci.id )
@@ -226,8 +226,8 @@
         ci.type,
         si.id AS shopId,
         ui.id AS userId,
-        ui.name AS userName,
-        ui.images as avatar,
+        ui.user_name AS userName,
+        ui.avatar as avatar,
         ai.address,
         ai.name AS takeUser,
         ai.phone
@@ -258,8 +258,8 @@
         ci.on_put,
         ci.type,
         si.id AS shopId,
-        ui.name AS userName,
-        ui.images as avatar,
+        ui.user_name AS userName,
+        ui.avatar as avatar,
         eva.id AS evaluationStatus,
 	    eva.content AS evaluationContent
         FROM
@@ -288,8 +288,8 @@
         ci.on_put,
         ci.type,
         si.id AS shopId,
-        ui.name AS userName,
-        ui.images as avatar,
+        ui.user_name AS userName,
+        ui.avatar as avatar,
         ui1.user_name AS buyer,
         eva.id AS evaluationStatus,
         eva.content AS evaluationContent

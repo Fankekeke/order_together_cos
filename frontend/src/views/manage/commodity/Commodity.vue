@@ -7,44 +7,26 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label='商品名称'
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
+                label="商品编号"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.code"/>
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="24">
+              <a-form-item
+                label="商品名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.name"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="店铺名"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.userName"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="商品类型"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-select v-model="queryParams.type" allowClear>
-                  <a-select-option value="1">上装</a-select-option>
-                  <a-select-option value="2">下装</a-select-option>
-                  <a-select-option value="3">首饰</a-select-option>
-                  <a-select-option value="4">鞋子</a-select-option>
-                  <a-select-option value="5">内衣</a-select-option>
-                  <a-select-option value="6">化妆品</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="上架状态"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-select v-model="queryParams.onPut" allowClear>
-                  <a-select-option value="0">下架中</a-select-option>
-                  <a-select-option value="1">上架中</a-select-option>
-                </a-select>
+                label="商品型号"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.model"/>
               </a-form-item>
             </a-col>
           </div>
@@ -57,7 +39,7 @@
     </div>
     <div>
       <div class="operator">
-        <!--        <a-button type="primary" ghost @click="add">新增</a-button>-->
+        <a-button type="primary" ghost @click="add">新增</a-button>
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -70,36 +52,35 @@
                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
                :scroll="{ x: 900 }"
                @change="handleTableChange">
-        <template slot="nameShow" slot-scope="text, record">
-          <template>
-            <a-badge v-if="record.onPut == 0" status="error"/>
-            <a-badge v-if="record.onPut == 1" status="processing"/>
-            <a-tooltip>
-              <template slot="title">
-                {{ record.name }}
-              </template>
-              {{ record.name.slice(0, 10) }} ...
-            </a-tooltip>
-          </template>
-        </template>
         <template slot="contentShow" slot-scope="text, record">
           <template>
             <a-tooltip>
               <template slot="title">
                 {{ record.content }}
               </template>
-              {{ record.content.slice(0, 20) }} ...
+              {{ record.content.slice(0, 10) }} ...
             </a-tooltip>
           </template>
         </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="reconciliation" @click="view(record)" title="查 看"></a-icon>
+          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改"></a-icon>
         </template>
       </a-table>
     </div>
+    <commodity-add
+      v-if="commodityAdd.visiable"
+      @close="handlecommodityAddClose"
+      @success="handlecommodityAddSuccess"
+      :commodityAddVisiable="commodityAdd.visiable">
+    </commodity-add>
+    <commodity-edit
+      ref="commodityEdit"
+      @close="handlecommodityEditClose"
+      @success="handlecommodityEditSuccess"
+      :commodityEditVisiable="commodityEdit.visiable">
+    </commodity-edit>
     <commodity-view
       @close="handlecommodityViewClose"
-      @checkClose="handlecommodityCheckClose"
       :commodityShow="commodityView.visiable"
       :commodityData="commodityView.data">
     </commodity-view>
@@ -108,21 +89,29 @@
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
+import commodityAdd from './CommodityAdd.vue'
+import commodityEdit from './CommodityEdit.vue'
+import commodityView from './CommodityView'
 import {mapState} from 'vuex'
 import moment from 'moment'
-import CommodityView from './CommodityView'
 moment.locale('zh-cn')
 
 export default {
   name: 'commodity',
-  components: {CommodityView, RangeDate},
+  components: {commodityAdd, commodityEdit, RangeDate, commodityView},
   data () {
     return {
+      advanced: false,
       commodityView: {
         visiable: false,
         data: null
       },
-      advanced: false,
+      commodityAdd: {
+        visiable: false
+      },
+      commodityEdit: {
+        visiable: false
+      },
       queryParams: {},
       filteredInfo: null,
       sortedInfo: null,
@@ -147,56 +136,43 @@ export default {
     }),
     columns () {
       return [{
+        title: '商品编号',
+        dataIndex: 'code'
+      }, {
         title: '商品名称',
-        dataIndex: 'name',
-        scopedSlots: { customRender: 'nameShow' }
+        dataIndex: 'name'
       }, {
-        title: '所属店铺',
-        dataIndex: 'userName',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text + '的小店'
-          } else {
-            return '- -'
-          }
-        }
-      }, {
-        title: '商品类型',
-        dataIndex: 'type',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>上装</a-tag>
-            case 2:
-              return <a-tag>下装</a-tag>
-            case 3:
-              return <a-tag>首饰</a-tag>
-            case 4:
-              return <a-tag>鞋子</a-tag>
-            case 5:
-              return <a-tag>内衣</a-tag>
-            case 6:
-              return <a-tag>化妆品</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
-        title: '价格',
+        title: '商品价格',
         dataIndex: 'price',
         customRender: (text, row, index) => {
           if (text !== null) {
-            return '￥' + text
+            return text + '元'
           } else {
             return '- -'
           }
         }
       }, {
-        title: '内容',
-        dataIndex: 'content',
-        scopedSlots: { customRender: 'contentShow' }
+        title: '库存数量',
+        dataIndex: 'stockNum',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        }
       }, {
-        title: '发布日期',
+        title: '型号',
+        dataIndex: 'model',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        }
+      }, {
+        title: '创建时间',
         dataIndex: 'createDate',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -205,6 +181,22 @@ export default {
             return '- -'
           }
         }
+      }, {
+        title: '商品图片',
+        dataIndex: 'images',
+        customRender: (text, record, index) => {
+          if (!record.images) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+          </a-popover>
+        }
+      }, {
+        title: '备注',
+        dataIndex: 'content',
+        scopedSlots: { customRender: 'contentShow' }
       }, {
         title: '操作',
         dataIndex: 'operation',
@@ -223,16 +215,34 @@ export default {
     handlecommodityViewClose () {
       this.commodityView.visiable = false
     },
-    handlecommodityCheckClose () {
-      this.commodityView.visiable = false
-      this.$message.success('审核成功')
-      this.fetch()
-    },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
+    },
+    add () {
+      this.commodityAdd.visiable = true
+    },
+    handlecommodityAddClose () {
+      this.commodityAdd.visiable = false
+    },
+    handlecommodityAddSuccess () {
+      this.commodityAdd.visiable = false
+      this.$message.success('新增商品成功')
+      this.search()
+    },
+    edit (record) {
+      this.$refs.commodityEdit.setFormValues(record)
+      this.commodityEdit.visiable = true
+    },
+    handlecommodityEditClose () {
+      this.commodityEdit.visiable = false
+    },
+    handlecommodityEditSuccess () {
+      this.commodityEdit.visiable = false
+      this.$message.success('修改商品成功')
+      this.search()
     },
     handleDeptChange (value) {
       this.queryParams.deptId = value || ''
@@ -318,12 +328,6 @@ export default {
         // 如果分页信息为空，则设置为默认值
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
-      }
-      if (params.type === undefined) {
-        delete params.type
-      }
-      if (params.onPut === undefined) {
-        delete params.onPut
       }
       this.$get('/cos/commodity-info/page', {
         ...params

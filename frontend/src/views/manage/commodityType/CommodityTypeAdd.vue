@@ -1,47 +1,28 @@
 <template>
-  <a-modal v-model="show" title="修改公告" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="新增商品类型" @cancel="onClose" :width="600">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
       </a-button>
       <a-button key="submit" type="primary" :loading="loading" @click="handleSubmit">
-        修改
+        提交
       </a-button>
     </template>
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='公告标题' v-bind="formItemLayout">
+          <a-form-item label='商品类型' v-bind="formItemLayout">
             <a-input v-decorator="[
-            'title',
+            'typeName',
             { rules: [{ required: true, message: '请输入名称!' }] }
             ]"/>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item label='上传人' v-bind="formItemLayout">
-            <a-input v-decorator="[
-            'publisher',
-            { rules: [{ required: true, message: '请输入上传人!' }] }
-            ]"/>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label='公告状态' v-bind="formItemLayout">
-            <a-select v-decorator="[
-              'rackUp',
-              { rules: [{ required: true, message: '请输入公告状态!' }] }
-              ]">
-              <a-select-option value="0">下架</a-select-option>
-              <a-select-option value="1">已发布</a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
         <a-col :span="24">
-          <a-form-item label='公告内容' v-bind="formItemLayout">
-            <a-textarea :rows="6" v-decorator="[
-            'content',
-             { rules: [{ required: true, message: '请输入名称!' }] }
+          <a-form-item label='商品类型内容' v-bind="formItemLayout">
+            <a-textarea :rows="4" v-decorator="[
+            'remark',
+             { rules: [{ required: true, message: '请输入内容!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -87,9 +68,9 @@ const formItemLayout = {
   wrapperCol: { span: 24 }
 }
 export default {
-  name: 'BulletinEdit',
+  name: 'BulletinAdd',
   props: {
-    bulletinEditVisiable: {
+    bulletinAddVisiable: {
       default: false
     }
   },
@@ -99,7 +80,7 @@ export default {
     }),
     show: {
       get: function () {
-        return this.bulletinEditVisiable
+        return this.bulletinAddVisiable
       },
       set: function () {
       }
@@ -107,7 +88,6 @@ export default {
   },
   data () {
     return {
-      rowId: null,
       formItemLayout,
       form: this.$form.createForm(this),
       loading: false,
@@ -130,34 +110,6 @@ export default {
     picHandleChange ({ fileList }) {
       this.fileList = fileList
     },
-    imagesInit (images) {
-      if (images !== null && images !== '') {
-        let imageList = []
-        images.split(',').forEach((image, index) => {
-          imageList.push({uid: index, name: image, status: 'done', url: 'http://127.0.0.1:9527/imagesWeb/' + image})
-        })
-        this.fileList = imageList
-      }
-    },
-    setFormValues ({...bulletin}) {
-      this.rowId = bulletin.id
-      let fields = ['title', 'content', 'publisher', 'rackUp', 'type']
-      let obj = {}
-      Object.keys(bulletin).forEach((key) => {
-        if (key === 'images') {
-          this.fileList = []
-          this.imagesInit(bulletin['images'])
-        }
-        if (key === 'rackUp') {
-          bulletin[key] = bulletin[key].toString()
-        }
-        if (fields.indexOf(key) !== -1) {
-          this.form.getFieldDecorator(key)
-          obj[key] = bulletin[key]
-        }
-      })
-      this.form.setFieldsValue(obj)
-    },
     reset () {
       this.loading = false
       this.form.resetFields()
@@ -170,18 +122,13 @@ export default {
       // 获取图片List
       let images = []
       this.fileList.forEach(image => {
-        if (image.response !== undefined) {
-          images.push(image.response)
-        } else {
-          images.push(image.name)
-        }
+        images.push(image.response)
       })
       this.form.validateFields((err, values) => {
-        values.id = this.rowId
         values.images = images.length > 0 ? images.join(',') : null
         if (!err) {
           this.loading = true
-          this.$put('/cos/bulletin-info', {
+          this.$post('/cos/commodity-type', {
             ...values
           }).then((r) => {
             this.reset()

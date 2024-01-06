@@ -9,8 +9,10 @@
         ci.code,
         ci.name,
         ci.type,
+        ci.stock_num,
         ci.price,
         ci.images,
+        ci.model,
         ci.content,
         ci.create_date AS createDate,
         ci.shop_id AS shopId,
@@ -25,14 +27,14 @@
         LEFT JOIN user_info ui ON ( ui.id = si.user_id )
         WHERE
         1 = 1
-        <if test="commodityInfo.userName != null and commodityInfo.userName != ''">
-            AND ui.user_name LIKE CONCAT('%',#{commodityInfo.userName},'%')
-        </if>
-        <if test="commodityInfo.type != null and commodityInfo.type != ''">
-            AND ci.type LIKE CONCAT('%',#{commodityInfo.type},'%')
+        <if test="commodityInfo.code != null and commodityInfo.code != ''">
+            AND ci.code LIKE CONCAT('%',#{commodityInfo.code},'%')
         </if>
         <if test="commodityInfo.name != null and commodityInfo.name != ''">
             AND ci.name LIKE CONCAT('%',#{commodityInfo.name},'%')
+        </if>
+        <if test="commodityInfo.model != null and commodityInfo.model != ''">
+            AND ci.model LIKE CONCAT('%',#{commodityInfo.model},'%')
         </if>
         <if test="commodityInfo.onPut != null and commodityInfo.onPut != ''">
             AND ci.on_put = #{commodityInfo.onPut}

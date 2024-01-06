@@ -3,21 +3,21 @@
     <div :class="advanced ? 'search' : null">
       <!-- 搜索区域 -->
       <a-form layout="horizontal">
-        <a-row>
+        <a-row :gutter="15">
           <div :class="advanced ? null: 'fold'">
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item
                 label="标题"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.title"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item
                 label="内容"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.content"/>
               </a-form-item>
             </a-col>
@@ -46,7 +46,8 @@
                @change="handleTableChange">
         <template slot="titleShow" slot-scope="text, record">
           <template>
-            <a-badge status="processing"/>
+            <a-badge status="processing" v-if="record.rackUp === 1"/>
+            <a-badge status="error" v-if="record.rackUp === 0"/>
             <a-tooltip>
               <template slot="title">
                 {{ record.title }}
@@ -61,7 +62,7 @@
               <template slot="title">
                 {{ record.content }}
               </template>
-              {{ record.content.slice(0, 30) }} ...
+              {{ record.content.slice(0, 40) }} ...
             </a-tooltip>
           </template>
         </template>
@@ -130,14 +131,11 @@ export default {
     columns () {
       return [{
         title: '标题',
-        dataIndex: 'title',
-        scopedSlots: { customRender: 'titleShow' },
-        width: 300
+        dataIndex: 'title'
       }, {
         title: '公告内容',
         dataIndex: 'content',
-        scopedSlots: { customRender: 'contentShow' },
-        width: 600
+        scopedSlots: { customRender: 'contentShow' }
       }, {
         title: '发布时间',
         dataIndex: 'createDate',
@@ -149,8 +147,21 @@ export default {
           }
         }
       }, {
+        title: '上下架',
+        dataIndex: 'type',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case 1:
+              return <a-tag>上架</a-tag>
+            case 2:
+              return <a-tag>下架</a-tag>
+            default:
+              return '- -'
+          }
+        }
+      }, {
         title: '上传人',
-        dataIndex: 'uploader',
+        dataIndex: 'publisher',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text

@@ -53,7 +53,7 @@ public class CommodityInfo implements Serializable {
     /**
      * 商品描述
      */
-    private String remark;
+    private String content;
 
     /**
      * 创建时间
@@ -75,5 +75,13 @@ public class CommodityInfo implements Serializable {
      */
     private Integer shopId;
 
+    /**
+     * 商品类型
+     */
+    private Integer type;
 
+    /**
+     * 商品状态（0.下架 1.上架）
+     */
+    private String onPut;
 }

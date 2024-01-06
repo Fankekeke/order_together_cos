@@ -7,26 +7,18 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label=收货地址
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.address"/>
+                label="类型编号"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.code"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="收货人"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.name"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="联系电话"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.phone"/>
+                label="类型名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.typeName"/>
               </a-form-item>
             </a-col>
           </div>
@@ -39,7 +31,7 @@
     </div>
     <div>
       <div class="operator">
-<!--        <a-button type="primary" ghost @click="add">新增</a-button>-->
+        <a-button type="primary" ghost @click="add">新增</a-button>
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -52,13 +44,15 @@
                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
                :scroll="{ x: 900 }"
                @change="handleTableChange">
-        <template slot="addressShow" slot-scope="text, record">
+        <template slot="titleShow" slot-scope="text, record">
           <template>
+            <a-badge status="processing" v-if="record.rackUp === 1"/>
+            <a-badge status="error" v-if="record.rackUp === 0"/>
             <a-tooltip>
               <template slot="title">
-                {{ record.address }}
+                {{ record.title }}
               </template>
-              {{ record.address.slice(0, 10) }} ...
+              {{ record.title.slice(0, 8) }} ...
             </a-tooltip>
           </template>
         </template>
@@ -66,9 +60,9 @@
           <template>
             <a-tooltip>
               <template slot="title">
-                {{ record.content }}
+                {{ record.remark }}
               </template>
-              {{ record.content.slice(0, 30) }} ...
+              {{ record.remark.slice(0, 20) }} ...
             </a-tooltip>
           </template>
         </template>
@@ -77,21 +71,41 @@
         </template>
       </a-table>
     </div>
+    <bulletin-add
+      v-if="bulletinAdd.visiable"
+      @close="handleBulletinAddClose"
+      @success="handleBulletinAddSuccess"
+      :bulletinAddVisiable="bulletinAdd.visiable">
+    </bulletin-add>
+    <bulletin-edit
+      ref="bulletinEdit"
+      @close="handleBulletinEditClose"
+      @success="handleBulletinEditSuccess"
+      :bulletinEditVisiable="bulletinEdit.visiable">
+    </bulletin-edit>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
+import BulletinAdd from './CommodityTypeAdd.vue'
+import BulletinEdit from './CommodityTypeEdit.vue'
 import {mapState} from 'vuex'
 import moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
-  name: 'Address',
-  components: {RangeDate},
+  name: 'Bulletin',
+  components: {BulletinAdd, BulletinEdit, RangeDate},
   data () {
     return {
       advanced: false,
+      bulletinAdd: {
+        visiable: false
+      },
+      bulletinEdit: {
+        visiable: false
+      },
       queryParams: {},
       filteredInfo: null,
       sortedInfo: null,
@@ -116,16 +130,11 @@ export default {
     }),
     columns () {
       return [{
-        title: '收货地址',
-        dataIndex: 'address',
-        scopedSlots: { customRender: 'addressShow' },
-        width: 300
+        title: '类型编号',
+        dataIndex: 'code'
       }, {
-        title: '收货人姓名',
-        dataIndex: 'name'
-      }, {
-        title: '联系电话',
-        dataIndex: 'phone',
+        title: '商品类型',
+        dataIndex: 'typeName',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
@@ -134,27 +143,23 @@ export default {
           }
         }
       }, {
-        title: '是否为默认地址',
-        dataIndex: 'defaultDddress',
-        customRender: (text, row, index) => {
-          if (text === 0) {
-            return <a-tag type="cyan">否</a-tag>
-          } else {
-            return <a-tag color="green">是</a-tag>
-          }
+        title: '类型图片',
+        dataIndex: 'images',
+        customRender: (text, record, index) => {
+          if (!record.images) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+          </a-popover>
         }
       }, {
-        title: '所属用户',
-        dataIndex: 'userName',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        }
+        title: '商品类型内容',
+        dataIndex: 'remark',
+        scopedSlots: { customRender: 'contentShow' }
       }, {
-        title: '上传时间',
+        title: '发布时间',
         dataIndex: 'createDate',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -163,6 +168,10 @@ export default {
             return '- -'
           }
         }
+      }, {
+        title: '操作',
+        dataIndex: 'operation',
+        scopedSlots: {customRender: 'operation'}
       }]
     }
   },
@@ -175,6 +184,29 @@ export default {
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
+    },
+    add () {
+      this.bulletinAdd.visiable = true
+    },
+    handleBulletinAddClose () {
+      this.bulletinAdd.visiable = false
+    },
+    handleBulletinAddSuccess () {
+      this.bulletinAdd.visiable = false
+      this.$message.success('新增商品类型成功')
+      this.search()
+    },
+    edit (record) {
+      this.$refs.bulletinEdit.setFormValues(record)
+      this.bulletinEdit.visiable = true
+    },
+    handleBulletinEditClose () {
+      this.bulletinEdit.visiable = false
+    },
+    handleBulletinEditSuccess () {
+      this.bulletinEdit.visiable = false
+      this.$message.success('修改商品类型成功')
+      this.search()
     },
     handleDeptChange (value) {
       this.queryParams.deptId = value || ''
@@ -191,7 +223,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/address-info/' + ids).then(() => {
+          that.$delete('/cos/bulletin-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -261,7 +293,7 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      this.$get('/cos/address-info/page', {
+      this.$get('/cos/commodity-type/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

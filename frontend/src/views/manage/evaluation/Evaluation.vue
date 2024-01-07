@@ -15,25 +15,10 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="店铺名"
+                label="店铺名称"
                 :labelCol="{span: 4}"
                 :wrapperCol="{span: 18, offset: 2}">
                 <a-input v-model="queryParams.userName"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="商品类型"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-select v-model="queryParams.type" allowClear>
-                  <a-select-option value="1">上装</a-select-option>
-                  <a-select-option value="2">下装</a-select-option>
-                  <a-select-option value="3">首饰</a-select-option>
-                  <a-select-option value="4">鞋子</a-select-option>
-                  <a-select-option value="5">内衣</a-select-option>
-                  <a-select-option value="6">化妆品</a-select-option>
-                </a-select>
               </a-form-item>
             </a-col>
           </div>
@@ -149,23 +134,12 @@ export default {
         scopedSlots: { customRender: 'nameShow' }
       }, {
         title: '商品类型',
-        dataIndex: 'type',
+        dataIndex: 'typeName',
         customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>上装</a-tag>
-            case 2:
-              return <a-tag>下装</a-tag>
-            case 3:
-              return <a-tag>首饰</a-tag>
-            case 4:
-              return <a-tag>鞋子</a-tag>
-            case 5:
-              return <a-tag>内衣</a-tag>
-            case 6:
-              return <a-tag>化妆品</a-tag>
-            default:
-              return '- -'
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
           }
         }
       }, {

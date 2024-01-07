@@ -11,8 +11,7 @@
         eva.create_date AS evaluationDate,
         oi.`code`,
         oi.commodity_id AS commodityId,
-        oi.price,
-        oi.order_status AS orderStatus,
+        oi.order_price as price,
         oi.create_date AS createDate,
         ci.`code` AS commodityCode,
         ci.`name`,
@@ -22,20 +21,19 @@
         ci.on_put AS onPut,
         si.introduction,
         si.tag,
+        ct.type_name,
         ui.user_name AS userName,
         ui.avatar,
         su.user_name AS shopName,
-        su.avatar AS shopAvatar,
-        ai.address,
-        ai.`name` AS taskUserName,
-        ai.phone
+        su.avatar AS shopAvatar
         FROM
         evaluation eva
-        LEFT JOIN order_info oi ON ( oi.id = eva.order_id )
+        LEFT JOIN order_detail od ON (od.id = eva.order_id )
+        LEFT JOIN order_info oi ON (oi.code = od.code)
         LEFT JOIN commodity_info ci ON ( ci.id = oi.commodity_id )
-        LEFT JOIN address_info ai ON ( ai.id = oi.address_id )
+        LEFT JOIN commodity_type ct ON ( ct.id = ci.type )
         LEFT JOIN shop_info si ON ( si.id = ci.shop_id )
-        LEFT JOIN user_info ui ON ( ui.id = oi.user_id )
+        LEFT JOIN user_info ui ON ( ui.id = od.user_id )
         LEFT JOIN user_info su ON ( su.id = si.user_id )
         WHERE
         1 = 1

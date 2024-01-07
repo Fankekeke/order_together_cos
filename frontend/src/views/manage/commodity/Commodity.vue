@@ -64,6 +64,7 @@
         </template>
         <template slot="operation" slot-scope="text, record">
           <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改"></a-icon>
+          <a-icon type="profile" theme="twoTone" twoToneColor="#4a9ff5" @click="view(record)" title="详 情" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
@@ -141,6 +142,16 @@ export default {
       }, {
         title: '商品名称',
         dataIndex: 'name'
+      }, {
+        title: '所属商铺',
+        dataIndex: 'shopName',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        }
       }, {
         title: '商品价格',
         dataIndex: 'price',

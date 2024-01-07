@@ -18,13 +18,16 @@
         ci.shop_id AS shopId,
         ci.on_put AS onPut,
         si.introduction,
+        si.name as shopName,
         si.tag,
         ui.user_name AS userName,
-        ui.avatar
+        ui.avatar,
+        ct.type_name
         FROM
         commodity_info ci
         LEFT JOIN shop_info si ON ( ci.shop_id = si.id )
         LEFT JOIN user_info ui ON ( ui.id = si.user_id )
+        LEFT JOIN commodity_type ct ON (ct.id = ci.type)
         WHERE
         1 = 1
         <if test="commodityInfo.code != null and commodityInfo.code != ''">

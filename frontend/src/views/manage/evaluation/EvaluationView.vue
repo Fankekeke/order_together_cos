@@ -5,7 +5,7 @@
         关闭
       </a-button>
     </template>
-    <div style="font-size: 13px" v-if="evaluationData !== null">
+    <div style="font-size: 13px;font-family: SimHei" v-if="evaluationData !== null">
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">评价信息</span></a-col>
         <a-col :span="12"><b>分数：</b>
@@ -79,12 +79,7 @@
           </a-tooltip>
         </a-col>
         <a-col :span="8"><b>商品类型：</b>
-          <span v-if="evaluationData.type == 1">上装</span>
-          <span v-if="evaluationData.type == 2">下装</span>
-          <span v-if="evaluationData.type == 3">首饰</span>
-          <span v-if="evaluationData.type == 4">鞋子</span>
-          <span v-if="evaluationData.type == 5">内衣</span>
-          <span v-if="evaluationData.type == 6">化妆品</span>
+          {{ evaluationData.typeName }}
         </a-col>
       </a-row>
       <br/>

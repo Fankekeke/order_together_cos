@@ -5,7 +5,7 @@
         关闭
       </a-button>
     </template>
-    <div style="font-size: 13px" v-if="postData !== null">
+    <div style="font-size: 13px;font-family: SimHei" v-if="postData !== null">
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">基础信息</span></a-col>
         <a-col :span="8"><b>发帖人：</b>

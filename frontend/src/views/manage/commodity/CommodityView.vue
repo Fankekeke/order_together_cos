@@ -5,7 +5,7 @@
         关闭
       </a-button>
     </template>
-    <div style="font-size: 13px" v-if="commodityData !== null">
+    <div style="font-size: 13px;font-family: SimHei" v-if="commodityData !== null">
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">商品信息</span></a-col>
         <a-col :span="8"><b>商品编号：</b>
@@ -20,12 +20,7 @@
           </a-tooltip>
         </a-col>
         <a-col :span="8"><b>商品类型：</b>
-          <span v-if="commodityData.type == 1">上装</span>
-          <span v-if="commodityData.type == 2">下装</span>
-          <span v-if="commodityData.type == 3">首饰</span>
-          <span v-if="commodityData.type == 4">鞋子</span>
-          <span v-if="commodityData.type == 5">内衣</span>
-          <span v-if="commodityData.type == 6">化妆品</span>
+          {{ commodityData.typeName }}
         </a-col>
       </a-row>
       <br/>
@@ -39,6 +34,18 @@
         </a-col>
         <a-col :span="8"><b>发布时间：</b>
           {{ commodityData.createDate }}
+        </a-col>
+      </a-row>
+      <br/>
+      <a-row style="padding-left: 24px;padding-right: 24px;">
+        <a-col :span="8"><b>库存：</b>
+          {{ commodityData.stockNum }}
+        </a-col>
+        <a-col :span="8"><b>型号：</b>
+          {{ commodityData.model }}
+        </a-col>
+        <a-col :span="8"><b>所属商家：</b>
+          {{ commodityData.shopName }}
         </a-col>
       </a-row>
       <br/>

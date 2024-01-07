@@ -43,6 +43,15 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
+          <a-form-item label='商品类型' v-bind="formItemLayout">
+            <a-select
+              style="width: 100%"
+              v-decorator="['type',{rules: [{ required: true, message: '请选择商品类型' }]}]">
+              <a-select-option v-for="(item, index) in typeList" :key="index" :value="item.id">{{item.typeName}}</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
           <a-form-item label='商品状态' v-bind="formItemLayout">
             <a-radio-group default-value="1" button-style="solid"
                            v-decorator="[
@@ -130,10 +139,19 @@ export default {
       loading: false,
       fileList: [],
       previewVisible: false,
-      previewImage: ''
+      previewImage: '',
+      typeList: []
     }
   },
+  mounted () {
+    this.selectTypeList()
+  },
   methods: {
+    selectTypeList () {
+      this.$get('/cos/commodity-type/list').then((r) => {
+        this.typeList = r.data.data
+      })
+    },
     handleCancel () {
       this.previewVisible = false
     },
@@ -158,7 +176,7 @@ export default {
     },
     setFormValues ({...commodity}) {
       this.rowId = commodity.id
-      let fields = ['name', 'price', 'stockNum', 'model', 'content', 'onPut']
+      let fields = ['name', 'price', 'stockNum', 'model', 'content', 'onPut', 'type']
       let obj = {}
       Object.keys(commodity).forEach((key) => {
         if (key === 'images') {

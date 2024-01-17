@@ -59,9 +59,7 @@ public class CommodityInfoServiceImpl extends ServiceImpl<CommodityInfoMapper, C
     @Override
     public List<LinkedHashMap<String, Object>> selShopDetailList() {
         List<LinkedHashMap<String, Object>> shopList = baseMapper.selShopList();
-        shopList.forEach(item -> {
-            item.put("goods", this.list(Wrappers.<CommodityInfo>lambdaQuery().eq(CommodityInfo::getShopId, item.get("id"))));
-        });
+        shopList.forEach(item -> item.put("goods", this.list(Wrappers.<CommodityInfo>lambdaQuery().eq(CommodityInfo::getShopId, item.get("id")))));
         return shopList;
     }
 

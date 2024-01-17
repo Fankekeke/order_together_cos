@@ -29,7 +29,7 @@ public class MessageInfoController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, MessageInfo messageInfo) {
+    public R page(Page<MessageInfo> page, MessageInfo messageInfo) {
         return R.ok(messageInfoService.getMessageByPage(page, messageInfo));
     }
 

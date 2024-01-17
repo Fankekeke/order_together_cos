@@ -29,7 +29,7 @@ public class ShopInfoController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, ShopInfo shopInfo) {
+    public R page(Page<ShopInfo> page, ShopInfo shopInfo) {
         return R.ok(shopInfoService.getShopInfoByPage(page, shopInfo));
     }
 

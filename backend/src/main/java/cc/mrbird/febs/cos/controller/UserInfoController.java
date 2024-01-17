@@ -29,7 +29,7 @@ public class UserInfoController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, UserInfo userInfo) {
+    public R page(Page<UserInfo> page, UserInfo userInfo) {
         return R.ok(userInfoService.getUserInfoByPage(page, userInfo));
     }
 

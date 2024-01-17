@@ -16,8 +16,15 @@ import java.util.LinkedHashMap;
 @Service
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements IUserInfoService {
 
+    /**
+     * 分页查询用户信息
+     *
+     * @param page     分页对象
+     * @param userInfo 用户信息
+     * @return 结果
+     */
     @Override
-    public IPage<LinkedHashMap<String, Object>> getUserInfoByPage(Page page, UserInfo userInfo) {
+    public IPage<LinkedHashMap<String, Object>> getUserInfoByPage(Page<UserInfo> page, UserInfo userInfo) {
         return baseMapper.getUserInfoByPage(page, userInfo);
     }
 }

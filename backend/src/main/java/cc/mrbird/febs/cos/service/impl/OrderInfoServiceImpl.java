@@ -28,16 +28,34 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     private final ICommodityInfoService commodityInfoService;
 
+    /**
+     * 分页查询订单信息
+     *
+     * @param page      分页对象
+     * @param orderInfo 订单信息
+     * @return 结果
+     */
     @Override
     public IPage<LinkedHashMap<String, Object>> getOrderByPage(Page page, OrderInfo orderInfo) {
         return baseMapper.getOrderByPage(page, orderInfo);
     }
 
+    /**
+     * 根据用户ID获取订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> orderListByUserId(Integer userId) {
         return baseMapper.orderListByUserId(userId);
     }
 
+    /**
+     * 获取主页数据
+     *
+     * @return 结果
+     */
     @Override
     public LinkedHashMap<String, Object> home() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
@@ -59,26 +77,56 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         return result;
     }
 
+    /**
+     * 根据商铺获取订单统计
+     *
+     * @param shopId 商铺ID
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> shopOrderRateByComm(Integer shopId) {
         return baseMapper.shopOrderRateByComm(shopId);
     }
 
+    /**
+     * 查询用户购物车
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> selGoodsCart(Integer userId) {
         return baseMapper.selGoodsCart(userId);
     }
 
+    /**
+     * 根据订单ID获取订单信息
+     *
+     * @param ids 订单IDs
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> selOrderListByOrderIds(List<String> ids) {
         return baseMapper.selOrderListByOrderIds(ids);
     }
 
+    /**
+     * 获取用户所有订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> getOrderListByUserId(Integer userId) {
         return baseMapper.getOrderListByUserId(userId);
     }
 
+    /**
+     * 根据用户获取卖出的订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> getOrderByUserId(Integer userId) {
         return baseMapper.getOrderByUserId(userId);

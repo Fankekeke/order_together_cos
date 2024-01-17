@@ -13,6 +13,12 @@ import java.util.LinkedHashMap;
  */
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
-    // 分页查询用户信息
-    IPage<LinkedHashMap<String, Object>> getUserInfoByPage(Page page, @Param("userInfo") UserInfo userInfo);
+    /**
+     * 分页查询用户信息
+     *
+     * @param page     分页对象
+     * @param userInfo 用户信息
+     * @return 结果
+     */
+    IPage<LinkedHashMap<String, Object>> getUserInfoByPage(Page<UserInfo> page, @Param("userInfo") UserInfo userInfo);
 }

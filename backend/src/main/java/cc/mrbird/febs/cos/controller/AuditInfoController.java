@@ -40,7 +40,7 @@ public class AuditInfoController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, AuditInfo auditInfo) {
+    public R page(Page<AuditInfo> page, AuditInfo auditInfo) {
         return R.ok(auditInfoService.getAuditInfoByPage(page, auditInfo));
     }
 

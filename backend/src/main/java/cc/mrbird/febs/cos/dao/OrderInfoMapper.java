@@ -14,39 +14,95 @@ import java.util.List;
  */
 public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
 
-    // 分页查询订单信息
-    IPage<LinkedHashMap<String, Object>> getOrderByPage(Page page, @Param("orderInfo") OrderInfo orderInfo);
+    /**
+     * 分页查询订单信息
+     *
+     * @param page      分页对象
+     * @param orderInfo 订单信息
+     * @return 结果
+     */
+    IPage<LinkedHashMap<String, Object>> getOrderByPage(Page<OrderInfo> page, @Param("orderInfo") OrderInfo orderInfo);
 
-    // 根据用户ID获取订单
+    /**
+     * 根据用户ID获取订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> orderListByUserId(@Param("userId") Integer userId);
 
-    // 订单统计
+    /**
+     * 订单统计
+     *
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> orderRevenueData();
 
-    // 本月订单量 本月收益
+    /**
+     * 本月订单量 本月收益
+     *
+     * @return 结果
+     */
     LinkedHashMap<String, Object> orderMonthRevenue();
 
-    // 本月收益占比
+    /**
+     * 本月收益占比
+     *
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> orderPriceRate();
 
-    // 商铺收益订单统计
+    /**
+     * 商铺收益订单统计
+     *
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> shopOrderRate();
 
-    // 根据商铺获取订单统计
+    /**
+     * 根据商铺获取订单统计
+     *
+     * @param shopId 商铺ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> shopOrderRateByComm(@Param("shopId") Integer shopId);
 
-    // 所有店铺信息
+    /**
+     * 所有店铺信息
+     *
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> shopList();
 
-    // 查询用户购物车
+    /**
+     * 查询用户购物车
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> selGoodsCart(@Param("userId") Integer userId);
 
-    // 根据订单ID获取订单信息
+    /**
+     * 根据订单ID获取订单信息
+     *
+     * @param ids 订单IDs
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> selOrderListByOrderIds(@Param("ids") List<String> ids);
 
-    // 获取用户所有订单
+    /**
+     * 获取用户所有订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> getOrderListByUserId(@Param("userId") Integer userId);
 
-    // 根据用户获取卖出的订单
+    /**
+     * 根据用户获取卖出的订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> getOrderByUserId(@Param("userId") Integer userId);
 }

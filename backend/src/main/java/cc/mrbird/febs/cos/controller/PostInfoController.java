@@ -40,7 +40,7 @@ public class PostInfoController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, PostInfo postInfo) {
+    public R page(Page<PostInfo> page, PostInfo postInfo) {
         return R.ok(postInfoService.getPostInfoByPage(page, postInfo));
     }
 

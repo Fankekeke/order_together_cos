@@ -16,8 +16,15 @@ import java.util.LinkedHashMap;
 @Service
 public class AuditInfoServiceImpl extends ServiceImpl<AuditInfoMapper, AuditInfo> implements IAuditInfoService {
 
+    /**
+     * 分页获取审核信息
+     *
+     * @param page      分页对象
+     * @param auditInfo 审核信息
+     * @return 结果
+     */
     @Override
-    public IPage<LinkedHashMap<String, Object>> getAuditInfoByPage(Page page, AuditInfo auditInfo) {
+    public IPage<LinkedHashMap<String, Object>> getAuditInfoByPage(Page<AuditInfo> page, AuditInfo auditInfo) {
         return baseMapper.getAuditInfoByPage(page, auditInfo);
     }
 }

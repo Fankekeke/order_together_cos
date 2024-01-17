@@ -14,10 +14,20 @@ import java.util.List;
  */
 public interface ShopInfoMapper extends BaseMapper<ShopInfo> {
 
-    // 分页查询商铺信息
-    IPage<LinkedHashMap<String, Object>> getShopInfoByPage(Page page, @Param("shopInfo") ShopInfo shopInfo);
+    /**
+     * 分页查询商铺信息
+     *
+     * @param page     分页对象
+     * @param shopInfo 商铺信息
+     * @return 结果
+     */
+    IPage<LinkedHashMap<String, Object>> getShopInfoByPage(Page<ShopInfo> page, @Param("shopInfo") ShopInfo shopInfo);
 
-    // 设计师信息
+    /**
+     * 查询商铺信息
+     *
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> shopInfoHot();
 
 }

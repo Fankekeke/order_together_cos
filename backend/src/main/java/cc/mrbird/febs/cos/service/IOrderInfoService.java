@@ -14,27 +14,67 @@ import java.util.List;
  */
 public interface IOrderInfoService extends IService<OrderInfo> {
 
-    // 分页查询订单信息
-    IPage<LinkedHashMap<String, Object>> getOrderByPage(Page page, OrderInfo orderInfo);
+    /**
+     * 分页查询订单信息
+     *
+     * @param page      分页对象
+     * @param orderInfo 订单信息
+     * @return 结果
+     */
+    IPage<LinkedHashMap<String, Object>> getOrderByPage(Page<OrderInfo> page, OrderInfo orderInfo);
 
-    // 根据用户ID获取订单
+    /**
+     * 根据用户ID获取订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> orderListByUserId(Integer userId);
 
-    // 获取主页数据
+    /**
+     * 获取主页数据
+     *
+     * @return 结果
+     */
     LinkedHashMap<String, Object> home();
 
-    // 根据商铺获取订单统计
+    /**
+     * 根据商铺获取订单统计
+     *
+     * @param shopId 商铺ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> shopOrderRateByComm(Integer shopId);
 
-    // 查询用户购物车
+    /**
+     * 查询用户购物车
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> selGoodsCart(Integer userId);
 
-    // 根据订单ID获取订单信息
+    /**
+     * 根据订单ID获取订单信息
+     *
+     * @param ids 订单IDs
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> selOrderListByOrderIds(List<String> ids);
 
-    // 获取用户所有订单
+    /**
+     * 获取用户所有订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> getOrderListByUserId(Integer userId);
 
-    // 根据用户获取卖出的订单
+    /**
+     * 根据用户获取卖出的订单
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     List<LinkedHashMap<String, Object>> getOrderByUserId(@Param("userId") Integer userId);
 }

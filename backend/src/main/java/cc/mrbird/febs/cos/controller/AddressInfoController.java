@@ -29,7 +29,7 @@ public class AddressInfoController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, AddressInfo addressInfo) {
+    public R page(Page<AddressInfo> page, AddressInfo addressInfo) {
         return R.ok(addressInfoService.getAddressInfoByPage(page, addressInfo));
     }
 

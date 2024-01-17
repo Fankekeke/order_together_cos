@@ -1,7 +1,9 @@
 package cc.mrbird.febs.cos.service.impl;
 
+import cc.mrbird.febs.cos.entity.CommodityInfo;
 import cc.mrbird.febs.cos.entity.ShopInfo;
 import cc.mrbird.febs.cos.dao.ShopInfoMapper;
+import cc.mrbird.febs.cos.service.ICommodityInfoService;
 import cc.mrbird.febs.cos.service.IShopInfoService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -21,18 +23,30 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> implements IShopInfoService {
 
-//    private final ICommodityInfoService commodityInfoService;
+    private final ICommodityInfoService commodityInfoService;
 
+    /**
+     * 分页查询商铺信息
+     *
+     * @param page     分页对象
+     * @param shopInfo 商铺信息
+     * @return 结果
+     */
     @Override
-    public IPage<LinkedHashMap<String, Object>> getShopInfoByPage(Page page, ShopInfo shopInfo) {
+    public IPage<LinkedHashMap<String, Object>> getShopInfoByPage(Page<ShopInfo> page, ShopInfo shopInfo) {
         return baseMapper.getShopInfoByPage(page, shopInfo);
     }
 
+    /**
+     * 查询商铺信息
+     *
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> shopInfoHot() {
         List<LinkedHashMap<String, Object>> shopList = baseMapper.shopInfoHot();
         shopList.forEach(item -> {
-//            item.put("commodityList", commodityInfoService.list(Wrappers.<CommodityInfo>lambdaQuery().eq(CommodityInfo::getShopId, Integer.parseInt(item.get("id").toString()))));
+            item.put("commodityList", commodityInfoService.list(Wrappers.<CommodityInfo>lambdaQuery().eq(CommodityInfo::getShopId, Integer.parseInt(item.get("id").toString()))));
         });
         return shopList;
     }

@@ -13,6 +13,12 @@ import java.util.LinkedHashMap;
  */
 public interface IAuditInfoService extends IService<AuditInfo> {
 
-    // 分页获取审核信息
-    IPage<LinkedHashMap<String, Object>> getAuditInfoByPage(Page page, AuditInfo auditInfo);
+    /**
+     * 分页获取审核信息
+     *
+     * @param page      分页对象
+     * @param auditInfo 审核信息
+     * @return 结果
+     */
+    IPage<LinkedHashMap<String, Object>> getAuditInfoByPage(Page<AuditInfo> page, AuditInfo auditInfo);
 }

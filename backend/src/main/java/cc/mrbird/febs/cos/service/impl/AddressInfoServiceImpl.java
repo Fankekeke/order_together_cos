@@ -16,8 +16,15 @@ import java.util.LinkedHashMap;
 @Service
 public class AddressInfoServiceImpl extends ServiceImpl<AddressInfoMapper, AddressInfo> implements IAddressInfoService {
 
+    /**
+     * 分页获取收货地址信息
+     *
+     * @param page        分页对象
+     * @param addressInfo 收货地址信息
+     * @return 结果
+     */
     @Override
-    public IPage<LinkedHashMap<String, Object>> getAddressInfoByPage(Page page, AddressInfo addressInfo) {
+    public IPage<LinkedHashMap<String, Object>> getAddressInfoByPage(Page<AddressInfo> page, AddressInfo addressInfo) {
         return baseMapper.getAddressInfoByPage(page, addressInfo);
     }
 }

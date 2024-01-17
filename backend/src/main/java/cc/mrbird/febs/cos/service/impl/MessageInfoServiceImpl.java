@@ -17,16 +17,36 @@ import java.util.List;
 @Service
 public class MessageInfoServiceImpl extends ServiceImpl<MessageInfoMapper, MessageInfo> implements IMessageInfoService {
 
+    /**
+     * 分页查询消息
+     *
+     * @param page        分页对象
+     * @param messageInfo 消息
+     * @return 结果
+     */
     @Override
-    public IPage<LinkedHashMap<String, Object>> getMessageByPage(Page page, MessageInfo messageInfo) {
+    public IPage<LinkedHashMap<String, Object>> getMessageByPage(Page<MessageInfo> page, MessageInfo messageInfo) {
         return baseMapper.getMessageByPage(page, messageInfo);
     }
 
+    /**
+     * 查询消息信息
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> messageListById(Integer userId) {
         return baseMapper.messageListById(userId);
     }
 
+    /**
+     * 查找聊天记录
+     *
+     * @param takeUser 发送者
+     * @param sendUser 接收人
+     * @return 结果
+     */
     @Override
     public List<LinkedHashMap<String, Object>> getMessageDetail(Integer takeUser, Integer sendUser) {
         return baseMapper.getMessageDetail(takeUser, sendUser);

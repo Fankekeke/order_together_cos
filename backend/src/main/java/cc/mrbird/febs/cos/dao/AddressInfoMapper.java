@@ -13,6 +13,12 @@ import java.util.LinkedHashMap;
  */
 public interface AddressInfoMapper extends BaseMapper<AddressInfo> {
 
-    // 分页获取收货地址信息
-    IPage<LinkedHashMap<String, Object>> getAddressInfoByPage(Page page, @Param("addressInfo") AddressInfo addressInfo);
+    /**
+     * 分页获取收货地址信息
+     *
+     * @param page        分页对象
+     * @param addressInfo 收货地址信息
+     * @return 结果
+     */
+    IPage<LinkedHashMap<String, Object>> getAddressInfoByPage(Page<AddressInfo> page, @Param("addressInfo") AddressInfo addressInfo);
 }

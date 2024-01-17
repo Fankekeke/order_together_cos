@@ -13,6 +13,12 @@ import java.util.LinkedHashMap;
  */
 public interface IUserInfoService extends IService<UserInfo> {
 
-    // 分页查询用户信息
-    IPage<LinkedHashMap<String, Object>> getUserInfoByPage(Page page, UserInfo userInfo);
+    /**
+     * 分页查询用户信息
+     *
+     * @param page     分页对象
+     * @param userInfo 用户信息
+     * @return 结果
+     */
+    IPage<LinkedHashMap<String, Object>> getUserInfoByPage(Page<UserInfo> page, UserInfo userInfo);
 }

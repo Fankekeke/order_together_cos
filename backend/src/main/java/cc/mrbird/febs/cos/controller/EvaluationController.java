@@ -51,7 +51,7 @@ public class EvaluationController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, Evaluation evaluation) {
+    public R page(Page<Evaluation> page, Evaluation evaluation) {
         return R.ok(evaluationService.getEvaluationPage(page, evaluation));
     }
 

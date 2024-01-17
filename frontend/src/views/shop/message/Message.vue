@@ -3,33 +3,22 @@
     <div :class="advanced ? 'search' : null">
       <!-- 搜索区域 -->
       <a-form layout="horizontal">
-        <a-row>
+        <a-row :gutter="15">
           <div :class="advanced ? null: 'fold'">
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item
-                label="用户昵称"
+                label='发送人'
                 :labelCol="{span: 4}"
                 :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.userName"/>
+                <a-input v-model="queryParams.sendUserName"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item
-                label="性别"
+                label="接收人"
                 :labelCol="{span: 4}"
                 :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.sex"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item
-                label="用户类型"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-select v-model="queryParams.type" allowClear>
-                  <a-select-option value="1">普通用户</a-select-option>
-                  <a-select-option value="2">商铺</a-select-option>
-                </a-select>
+                <a-input v-model="queryParams.takeUserName"/>
               </a-form-item>
             </a-col>
           </div>
@@ -42,7 +31,7 @@
     </div>
     <div>
       <div class="operator">
-<!--        <a-button type="primary" ghost @click="add">新增</a-button>-->
+        <!--        <a-button type="primary" ghost @click="add">新增</a-button>-->
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -55,13 +44,13 @@
                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
                :scroll="{ x: 900 }"
                @change="handleTableChange">
-        <template slot="avatarShow" slot-scope="text, record">
+        <template slot="addressShow" slot-scope="text, record">
           <template>
             <a-tooltip>
               <template slot="title">
-                {{ record.title }}
+                {{ record.address }}
               </template>
-              {{ record.title.slice(0, 8) }} ...
+              {{ record.address.slice(0, 10) }} ...
             </a-tooltip>
           </template>
         </template>
@@ -71,20 +60,15 @@
               <template slot="title">
                 {{ record.content }}
               </template>
-              {{ record.content.slice(0, 30) }} ...
+              {{ record.content.slice(0, 15) }} ...
             </a-tooltip>
           </template>
         </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon v-if="record.type == 1" type="reconciliation" @click="view(record)" title="订 单"></a-icon>
+          <a-icon type="reconciliation" @click="view(record)" title="查 看"></a-icon>
         </template>
       </a-table>
     </div>
-    <user-view
-      @close="handleUserViewClose"
-      :userShow="userView.visiable"
-      :userData="userView.data">
-    </user-view>
   </a-card>
 </template>
 
@@ -92,18 +76,13 @@
 import RangeDate from '@/components/datetime/RangeDate'
 import {mapState} from 'vuex'
 import moment from 'moment'
-import UserView from './UserView'
 moment.locale('zh-cn')
 
 export default {
-  name: 'User',
-  components: {UserView, RangeDate},
+  name: 'message',
+  components: {RangeDate},
   data () {
     return {
-      userView: {
-        visiable: false,
-        data: null
-      },
       advanced: false,
       queryParams: {},
       filteredInfo: null,
@@ -129,66 +108,49 @@ export default {
     }),
     columns () {
       return [{
-        title: '用户编号',
-        dataIndex: 'code'
+        title: '发送人',
+        dataIndex: 'sendUserName'
       }, {
-        title: '用户昵称',
-        dataIndex: 'userName'
+        title: '头像',
+        dataIndex: 'sendUserAvatar',
+        customRender: (text, record, index) => {
+          if (!record.sendUserAvatar) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ record.sendUserAvatar } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ record.sendUserAvatar } />
+          </a-popover>
+        }
       }, {
-        title: 'OPENID',
-        dataIndex: 'openId',
+        title: '接收人',
+        dataIndex: 'takeUserName'
+      }, {
+        title: '头像',
+        dataIndex: 'takeUserAvatar',
+        customRender: (text, record, index) => {
+          if (!record.takeUserAvatar) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ record.takeUserAvatar } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ record.takeUserAvatar } />
+          </a-popover>
+        }
+      }, {
+        title: '发送内容',
+        dataIndex: 'content',
+        scopedSlots: { customRender: 'contentShow' }
+      }, {
+        title: '发送日期',
+        dataIndex: 'createDate',
         customRender: (text, row, index) => {
           if (text !== null) {
-            return '******'
+            return text
           } else {
             return '- -'
           }
         }
-      }, {
-        title: '性别',
-        dataIndex: 'sex',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>男</a-tag>
-            case 2:
-              return <a-tag>女</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
-        title: '头像',
-        dataIndex: 'avatar',
-        customRender: (text, record, index) => {
-          if (!record.avatar) return <a-avatar shape="square" icon="user" />
-          return <a-popover>
-            <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ record.avatar } />
-            </template>
-            <a-avatar shape="square" icon="user" src={ record.avatar } />
-          </a-popover>
-        }
-      }, {
-        title: '用户类型',
-        dataIndex: 'type',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>普通用户</a-tag>
-            case 2:
-              return <a-tag>商铺</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
-        title: '创建时间',
-        dataIndex: 'createDate'
-      }, {
-        title: '操作',
-        dataIndex: 'operation',
-        scopedSlots: {customRender: 'operation'}
       }]
     }
   },
@@ -196,13 +158,6 @@ export default {
     this.fetch()
   },
   methods: {
-    view (row) {
-      this.userView.data = row
-      this.userView.visiable = true
-    },
-    handleUserViewClose () {
-      this.userView.visiable = false
-    },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
@@ -224,7 +179,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/user-info/' + ids).then(() => {
+          that.$delete('/cos/message-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -294,13 +249,7 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      if (params.sex === undefined) {
-        delete params.sex
-      }
-      if (params.type === undefined) {
-        delete params.type
-      }
-      this.$get('/cos/user-info/page', {
+      this.$get('/cos/message-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

@@ -26,7 +26,7 @@
                 <head-info title="用户数量" :content="userNum" :center="false" :bordered="false"/>
               </a-col>
               <a-col :span="4">
-                <head-info title="设计师" :content="userAuditNum" :center="false" :bordered="false"/>
+                <head-info title="商铺" :content="userAuditNum" :center="false" :bordered="false"/>
               </a-col>
               <a-col :span="4">
                 <head-info title="订单数量" :content="orderNum" :center="false" />

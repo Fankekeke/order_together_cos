@@ -60,7 +60,7 @@ public class OrderInfoController {
      * @return 结果
      */
     @GetMapping("/page")
-    public R page(Page page, OrderInfo orderInfo) {
+    public R page(Page<OrderInfo> page, OrderInfo orderInfo) {
         return R.ok(orderInfoService.getOrderByPage(page, orderInfo));
     }
 

@@ -3,33 +3,30 @@
     <div :class="advanced ? 'search' : null">
       <!-- 搜索区域 -->
       <a-form layout="horizontal">
-        <a-row>
+        <a-row :gutter="15">
           <div :class="advanced ? null: 'fold'">
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item
-                label="用户昵称"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.userName"/>
+                label="商品编号"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.code"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item
-                label="性别"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.sex"/>
+                label="商品名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.name"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :md="6" :sm="24">
               <a-form-item
-                label="用户类型"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-select v-model="queryParams.type" allowClear>
-                  <a-select-option value="1">普通用户</a-select-option>
-                  <a-select-option value="2">商铺</a-select-option>
-                </a-select>
+                label="商品型号"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.model"/>
               </a-form-item>
             </a-col>
           </div>
@@ -42,7 +39,7 @@
     </div>
     <div>
       <div class="operator">
-<!--        <a-button type="primary" ghost @click="add">新增</a-button>-->
+        <a-button type="primary" ghost @click="add">新增</a-button>
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -55,56 +52,67 @@
                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
                :scroll="{ x: 900 }"
                @change="handleTableChange">
-        <template slot="avatarShow" slot-scope="text, record">
-          <template>
-            <a-tooltip>
-              <template slot="title">
-                {{ record.title }}
-              </template>
-              {{ record.title.slice(0, 8) }} ...
-            </a-tooltip>
-          </template>
-        </template>
         <template slot="contentShow" slot-scope="text, record">
           <template>
             <a-tooltip>
               <template slot="title">
                 {{ record.content }}
               </template>
-              {{ record.content.slice(0, 30) }} ...
+              {{ record.content.slice(0, 10) }} ...
             </a-tooltip>
           </template>
         </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon v-if="record.type == 1" type="reconciliation" @click="view(record)" title="订 单"></a-icon>
+          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改"></a-icon>
+          <a-icon type="profile" theme="twoTone" twoToneColor="#4a9ff5" @click="view(record)" title="详 情" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
-    <user-view
-      @close="handleUserViewClose"
-      :userShow="userView.visiable"
-      :userData="userView.data">
-    </user-view>
+    <commodity-add
+      v-if="commodityAdd.visiable"
+      @close="handlecommodityAddClose"
+      @success="handlecommodityAddSuccess"
+      :commodityAddVisiable="commodityAdd.visiable">
+    </commodity-add>
+    <commodity-edit
+      ref="commodityEdit"
+      @close="handlecommodityEditClose"
+      @success="handlecommodityEditSuccess"
+      :commodityEditVisiable="commodityEdit.visiable">
+    </commodity-edit>
+    <commodity-view
+      @close="handlecommodityViewClose"
+      :commodityShow="commodityView.visiable"
+      :commodityData="commodityView.data">
+    </commodity-view>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
+import commodityAdd from './CommodityAdd.vue'
+import commodityEdit from './CommodityEdit.vue'
+import commodityView from './CommodityView'
 import {mapState} from 'vuex'
 import moment from 'moment'
-import UserView from './UserView'
 moment.locale('zh-cn')
 
 export default {
-  name: 'User',
-  components: {UserView, RangeDate},
+  name: 'commodity',
+  components: {commodityAdd, commodityEdit, RangeDate, commodityView},
   data () {
     return {
-      userView: {
+      advanced: false,
+      commodityView: {
         visiable: false,
         data: null
       },
-      advanced: false,
+      commodityAdd: {
+        visiable: false
+      },
+      commodityEdit: {
+        visiable: false
+      },
       queryParams: {},
       filteredInfo: null,
       sortedInfo: null,
@@ -129,62 +137,77 @@ export default {
     }),
     columns () {
       return [{
-        title: '用户编号',
+        title: '商品编号',
         dataIndex: 'code'
       }, {
-        title: '用户昵称',
-        dataIndex: 'userName'
+        title: '商品名称',
+        dataIndex: 'name'
       }, {
-        title: 'OPENID',
-        dataIndex: 'openId',
+        title: '所属商铺',
+        dataIndex: 'shopName',
         customRender: (text, row, index) => {
           if (text !== null) {
-            return '******'
+            return text
           } else {
             return '- -'
           }
         }
       }, {
-        title: '性别',
-        dataIndex: 'sex',
+        title: '商品价格',
+        dataIndex: 'price',
         customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>男</a-tag>
-            case 2:
-              return <a-tag>女</a-tag>
-            default:
-              return '- -'
+          if (text !== null) {
+            return text + '元'
+          } else {
+            return '- -'
           }
         }
       }, {
-        title: '头像',
-        dataIndex: 'avatar',
-        customRender: (text, record, index) => {
-          if (!record.avatar) return <a-avatar shape="square" icon="user" />
-          return <a-popover>
-            <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ record.avatar } />
-            </template>
-            <a-avatar shape="square" icon="user" src={ record.avatar } />
-          </a-popover>
+        title: '库存数量',
+        dataIndex: 'stockNum',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
         }
       }, {
-        title: '用户类型',
-        dataIndex: 'type',
+        title: '型号',
+        dataIndex: 'model',
         customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>普通用户</a-tag>
-            case 2:
-              return <a-tag>商铺</a-tag>
-            default:
-              return '- -'
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
           }
         }
       }, {
         title: '创建时间',
-        dataIndex: 'createDate'
+        dataIndex: 'createDate',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        }
+      }, {
+        title: '商品图片',
+        dataIndex: 'images',
+        customRender: (text, record, index) => {
+          if (!record.images) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+          </a-popover>
+        }
+      }, {
+        title: '备注',
+        dataIndex: 'content',
+        scopedSlots: { customRender: 'contentShow' }
       }, {
         title: '操作',
         dataIndex: 'operation',
@@ -197,17 +220,40 @@ export default {
   },
   methods: {
     view (row) {
-      this.userView.data = row
-      this.userView.visiable = true
+      this.commodityView.data = row
+      this.commodityView.visiable = true
     },
-    handleUserViewClose () {
-      this.userView.visiable = false
+    handlecommodityViewClose () {
+      this.commodityView.visiable = false
     },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
+    },
+    add () {
+      this.commodityAdd.visiable = true
+    },
+    handlecommodityAddClose () {
+      this.commodityAdd.visiable = false
+    },
+    handlecommodityAddSuccess () {
+      this.commodityAdd.visiable = false
+      this.$message.success('新增商品成功')
+      this.search()
+    },
+    edit (record) {
+      this.$refs.commodityEdit.setFormValues(record)
+      this.commodityEdit.visiable = true
+    },
+    handlecommodityEditClose () {
+      this.commodityEdit.visiable = false
+    },
+    handlecommodityEditSuccess () {
+      this.commodityEdit.visiable = false
+      this.$message.success('修改商品成功')
+      this.search()
     },
     handleDeptChange (value) {
       this.queryParams.deptId = value || ''
@@ -224,7 +270,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/user-info/' + ids).then(() => {
+          that.$delete('/cos/commodity-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -294,13 +340,7 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      if (params.sex === undefined) {
-        delete params.sex
-      }
-      if (params.type === undefined) {
-        delete params.type
-      }
-      this.$get('/cos/user-info/page', {
+      this.$get('/cos/commodity-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

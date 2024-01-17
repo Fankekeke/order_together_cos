@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 设计师审核管理
+ * 商家审核管理
  *
  * @author FanK
  */

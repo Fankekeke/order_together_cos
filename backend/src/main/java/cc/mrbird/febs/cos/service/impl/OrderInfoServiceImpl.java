@@ -36,7 +36,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
      * @return 结果
      */
     @Override
-    public IPage<LinkedHashMap<String, Object>> getOrderByPage(Page page, OrderInfo orderInfo) {
+    public IPage<LinkedHashMap<String, Object>> getOrderByPage(Page<OrderInfo> page, OrderInfo orderInfo) {
         return baseMapper.getOrderByPage(page, orderInfo);
     }
 

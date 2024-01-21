@@ -10,7 +10,7 @@
         oi.commodity_id AS commodityId,
         oi.order_price,
         oi.order_status AS orderStatus,
-        oi.create_date AS createDate,
+        od.create_date AS createDate,
         ci.`code` AS commodityCode,
         ci.`name`,
         ci.type,
@@ -27,11 +27,12 @@
         ai.`name` AS taskUserName,
         ai.phone
         FROM
-        order_info oi
+        order_detail od
+        LEFT JOIN order_info oi on (oi.code = od.code)
         LEFT JOIN commodity_info ci ON ( ci.id = oi.commodity_id )
-        LEFT JOIN address_info ai ON ( ai.id = oi.address_id )
+        LEFT JOIN address_info ai ON ( ai.id = od.address_id )
         LEFT JOIN shop_info si ON ( si.id = ci.shop_id )
-        LEFT JOIN user_info ui ON ( ui.id = oi.user_id )
+        LEFT JOIN user_info ui ON ( ui.id = od.user_id )
         LEFT JOIN user_info su ON ( su.id = si.user_id )
         WHERE
         1 = 1

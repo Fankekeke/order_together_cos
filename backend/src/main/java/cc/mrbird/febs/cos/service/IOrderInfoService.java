@@ -47,6 +47,14 @@ public interface IOrderInfoService extends IService<OrderInfo> {
     List<LinkedHashMap<String, Object>> shopOrderRateByComm(Integer shopId);
 
     /**
+     * 获取订单详情
+     *
+     * @param orderCode 订单编号
+     * @return 结果
+     */
+    LinkedHashMap<String, Object> selectOrderDetail(String orderCode);
+
+    /**
      * 查询用户购物车
      *
      * @param userId 用户ID

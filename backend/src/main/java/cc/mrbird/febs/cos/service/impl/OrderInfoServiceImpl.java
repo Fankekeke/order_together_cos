@@ -1,7 +1,10 @@
 package cc.mrbird.febs.cos.service.impl;
 
+import cc.mrbird.febs.cos.dao.ShopInfoMapper;
+import cc.mrbird.febs.cos.entity.CommodityInfo;
 import cc.mrbird.febs.cos.entity.OrderInfo;
 import cc.mrbird.febs.cos.dao.OrderInfoMapper;
+import cc.mrbird.febs.cos.entity.ShopInfo;
 import cc.mrbird.febs.cos.entity.UserInfo;
 import cc.mrbird.febs.cos.service.ICommodityInfoService;
 import cc.mrbird.febs.cos.service.IOrderInfoService;
@@ -27,6 +30,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private final IUserInfoService userInfoService;
 
     private final ICommodityInfoService commodityInfoService;
+
+    private final ShopInfoMapper shopInfoMapper;
 
     /**
      * 分页查询订单信息
@@ -86,6 +91,41 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Override
     public List<LinkedHashMap<String, Object>> shopOrderRateByComm(Integer shopId) {
         return baseMapper.shopOrderRateByComm(shopId);
+    }
+
+    /**
+     * 获取订单详情
+     *
+     * @param orderCode 订单编号
+     * @return 结果
+     */
+    @Override
+    public LinkedHashMap<String, Object> selectOrderDetail(String orderCode) {
+        // 返回数据
+        LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>() {
+            {
+                put("order", null);
+                put("detail", null);
+                put("shop", null);
+                put("commodity", null);
+            }
+        };
+
+        // 订单信息
+        OrderInfo orderInfo = this.getOne(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getCode, orderCode));
+        result.put("order", orderInfo);
+
+        // 商品信息
+        CommodityInfo commodityInfo = commodityInfoService.getById(orderInfo.getCommodityId());
+        result.put("commodity", commodityInfo);
+
+        // 商铺信息
+        ShopInfo shopInfo = shopInfoMapper.selectById(commodityInfo.getShopId());
+        result.put("shop", shopInfo);
+
+        // 订单详情
+        
+        return null;
     }
 
     /**

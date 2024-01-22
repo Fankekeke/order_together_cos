@@ -68,6 +68,14 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     List<LinkedHashMap<String, Object>> shopOrderRateByComm(@Param("shopId") Integer shopId);
 
     /**
+     * 订单详情
+     *
+     * @param orderCode 订单编号
+     * @return 结果
+     */
+    List<LinkedHashMap<String, Object>> selectOrderDetailList(@Param("orderCode") String orderCode);
+
+    /**
      * 所有店铺信息
      *
      * @return 结果

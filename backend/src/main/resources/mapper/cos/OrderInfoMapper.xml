@@ -172,6 +172,11 @@
         ci.id
     </select>
 
+    <!-- 订单详情 -->
+    <select id="selectOrderDetailList" resultType="java.util.LinkedHashMap">
+
+    </select>
+
     <!-- 所有店铺信息 -->
     <select id="shopList" resultType="java.util.LinkedHashMap">
         SELECT

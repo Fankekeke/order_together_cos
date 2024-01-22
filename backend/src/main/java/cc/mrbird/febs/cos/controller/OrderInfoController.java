@@ -32,6 +32,17 @@ public class OrderInfoController {
     }
 
     /**
+     * 获取订单详情
+     *
+     * @param orderCode 订单编号
+     * @return 结果
+     */
+    @GetMapping("/order/detail/{orderCode}")
+    public R selectOrderDetail(@PathVariable("orderCode") String orderCode) {
+        return R.ok();
+    }
+
+    /**
      * 根据商铺获取订单统计
      *
      * @param shopId 商铺ID

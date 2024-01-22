@@ -210,11 +210,11 @@ export default {
         this.dataLoading = false
       })
     },
-    setFormValues ({...student}) {
-      this.rowId = student.id
+    setFormValues ({...user}) {
+      this.rowId = user.id
       let fields = ['studentName', 'code', 'phone', 'province', 'city', 'area', 'address', 'classId', 'sex', 'birthday', 'major']
       let obj = {}
-      Object.keys(student).forEach((key) => {
+      Object.keys(user).forEach((key) => {
         if (key === 'images') {
           this.fileList = []
           this.imagesInit(user['images'])
@@ -226,7 +226,7 @@ export default {
         }
         if (fields.indexOf(key) !== -1) {
           this.form.getFieldDecorator(key)
-          obj[key] = student[key]
+          obj[key] = user[key]
         }
       })
       this.form.setFieldsValue(obj)

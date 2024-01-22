@@ -10,7 +10,7 @@
         <a-row :gutter="15">
           <a-col :span="12" v-for="(item, index) in orderList" :key="index" style="margin-top: 15px">
             <a-card hoverable>
-              <a-card-meta :title="item.shopName + '的小店'" :description="item.name">
+              <a-card-meta :title="item.shopName + '的店铺'" :description="item.name">
                 <a-avatar
                   slot="avatar"
                   :src="item.shopAvatar"
@@ -18,7 +18,7 @@
               </a-card-meta>
               <div style="margin-left: 45px;margin-top: 20px">
                 <a-row :gutter="8">
-                  <a-col :span="8"><b>价 格：</b>￥{{ item.price }}</a-col>
+                  <a-col :span="8"><b>价 格：</b>￥{{ item.orderPrice }}</a-col>
                   <a-col :span="16"><b>下单时间：</b>{{ item.createDate }}</a-col>
                 </a-row>
               </div>

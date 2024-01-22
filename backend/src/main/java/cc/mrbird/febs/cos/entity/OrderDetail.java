@@ -44,5 +44,9 @@ public class OrderDetail implements Serializable {
      */
     private String createDate;
 
+    /**
+     * 收货地址
+     */
+    private Integer addressId;
 
 }

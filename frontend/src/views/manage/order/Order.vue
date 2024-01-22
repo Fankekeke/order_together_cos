@@ -161,11 +161,9 @@ export default {
         dataIndex: 'orderStatus',
         customRender: (text, row, index) => {
           switch (text) {
-            case 1:
-              return <a-tag>待付款</a-tag>
-            case 2:
+            case '0':
               return <a-tag>待收货</a-tag>
-            case 3:
+            case '1':
               return <a-tag>已收货</a-tag>
             default:
               return '- -'
@@ -194,7 +192,7 @@ export default {
         }
       }, {
         title: '订单价格',
-        dataIndex: 'price',
+        dataIndex: 'orderPrice',
         customRender: (text, row, index) => {
           if (text !== null) {
             return '￥' + text

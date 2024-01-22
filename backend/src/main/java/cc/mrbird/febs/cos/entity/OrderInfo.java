@@ -32,34 +32,54 @@ public class OrderInfo implements Serializable {
     private String code;
 
     /**
+     * 订单名称
+     */
+    private String orderName;
+
+    /**
      * 商品ID
      */
     private Integer commodityId;
 
     /**
+     * 所属商铺
+     */
+    private Integer shopId;
+
+    /**
      * 价格
      */
-    private BigDecimal price;
+    private BigDecimal orderPrice;
 
     /**
-     * 目的地
+     * 备注
      */
-    private Integer addressId;
+    private String remark;
 
     /**
-     * 所属用户
-     */
-    private Integer userId;
-
-    /**
-     * 订单状态 1.待付款 2.待收货 3.已收货
+     * 订单状态（0.正在拼单 1.已完成 2.拼单失败）
      */
     private Integer orderStatus;
+
+    /**
+     * 用户人数
+     */
+    private Integer userNum;
 
     /**
      * 下单时间
      */
     private String createDate;
+
+    /**
+     * 下单时间
+     */
+    private String payDate;
+
+    /**
+     * 完成时间
+     */
+    private String finishDate;
 
     @TableField(exist = false)
     private String commodityName;

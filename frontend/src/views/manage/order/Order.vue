@@ -29,21 +29,6 @@
                 <a-input v-model="queryParams.userName"/>
               </a-form-item>
             </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="商品类型"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-select v-model="queryParams.type" allowClear>
-                  <a-select-option value="1">上装</a-select-option>
-                  <a-select-option value="2">下装</a-select-option>
-                  <a-select-option value="3">首饰</a-select-option>
-                  <a-select-option value="4">鞋子</a-select-option>
-                  <a-select-option value="5">内衣</a-select-option>
-                  <a-select-option value="6">化妆品</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
           </div>
           <span style="float: right; margin-top: 3px;">
             <a-button type="primary" @click="search">查询</a-button>
@@ -201,7 +186,7 @@ export default {
           }
         }
       }, {
-        title: '订单所属',
+        title: '发起人',
         dataIndex: 'userName',
         scopedSlots: { customRender: 'userNameShow' }
       }, {

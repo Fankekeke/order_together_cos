@@ -6,11 +6,20 @@
     <select id="getOrderByPage" resultType="java.util.LinkedHashMap">
         SELECT
         oi.id,
-        oi.code,
-        oi.commodity_id AS commodityId,
+        oi.CODE,
+        oi.order_name,
+        oi.shop_id,
+        oi.create_date,
+        oi.remark,
+        oi.order_status,
+        oi.user_ids,
+        oi.pay_date,
+        oi.finish_date,
         oi.order_price,
-        oi.order_status AS orderStatus,
-        od.create_date AS createDate,
+        oi.user_num,
+        oi.commodity_id,
+        oi.user_id,
+        oi.address_id,
         ci.`code` AS commodityCode,
         ci.`name`,
         ci.type,
@@ -20,20 +29,18 @@
         si.introduction,
         si.tag,
         ui.user_name AS userName,
-        ui.avatar as avatar,
-        su.user_name AS shopName,
-        su.avatar AS shopAvatar,
+        ui.avatar AS avatar,
         ai.address,
         ai.`name` AS taskUserName,
-        ai.phone
+        ai.phone,
+        ct.type_name
         FROM
-        order_detail od
-        LEFT JOIN order_info oi on (oi.code = od.code)
+        order_info oi
+        LEFT JOIN user_info ui ON ( ui.id = oi.user_id )
         LEFT JOIN commodity_info ci ON ( ci.id = oi.commodity_id )
-        LEFT JOIN address_info ai ON ( ai.id = od.address_id )
-        LEFT JOIN shop_info si ON ( si.id = ci.shop_id )
-        LEFT JOIN user_info ui ON ( ui.id = od.user_id )
-        LEFT JOIN user_info su ON ( su.id = si.user_id )
+        LEFT JOIN commodity_type ct ON ( ct.id = ci.`type` )
+        LEFT JOIN shop_info si ON ( si.id = oi.shop_id )
+        LEFT JOIN address_info ai ON ( ai.id = oi.address_id )
         WHERE
         1 = 1
         <if test="orderInfo.userName != null and orderInfo.userName != ''">
@@ -51,7 +58,8 @@
         <if test="orderInfo.type != null and orderInfo.type != ''">
             AND ci.type = #{orderInfo.type}
         </if>
-        ORDER BY oi.create_date
+        ORDER BY
+        oi.create_date desc
     </select>
 
     <!-- 根据用户ID获取订单 -->

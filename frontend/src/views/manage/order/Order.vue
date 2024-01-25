@@ -76,7 +76,7 @@
               <template slot="title">
                 {{ record.address }}
               </template>
-              {{ record.address.slice(0, 15) }} ...
+              {{ record.address.slice(0, 10) }} ...
             </a-tooltip>
           </template>
         </template>
@@ -147,32 +147,23 @@ export default {
         customRender: (text, row, index) => {
           switch (text) {
             case '0':
-              return <a-tag>待收货</a-tag>
+              return <a-tag>正在拼单</a-tag>
             case '1':
-              return <a-tag>已收货</a-tag>
+              return <a-tag>已完成</a-tag>
+            case '2':
+              return <a-tag>拼单失败</a-tag>
             default:
               return '- -'
           }
         }
       }, {
         title: '商品类型',
-        dataIndex: 'type',
+        dataIndex: 'typeName',
         customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>上装</a-tag>
-            case 2:
-              return <a-tag>下装</a-tag>
-            case 3:
-              return <a-tag>首饰</a-tag>
-            case 4:
-              return <a-tag>鞋子</a-tag>
-            case 5:
-              return <a-tag>内衣</a-tag>
-            case 6:
-              return <a-tag>化妆品</a-tag>
-            default:
-              return '- -'
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
           }
         }
       }, {

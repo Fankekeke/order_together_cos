@@ -365,7 +365,7 @@ public class WebController {
      */
     @GetMapping("/getMessageDetail")
     public R getMessageDetail(@RequestParam(value = "takeUser") Integer takeUser, @RequestParam(value = "sendUser") Integer sendUser, @RequestParam(value = "userId") Integer userId) {
-        if (takeUser == userId) {
+        if (takeUser.equals(userId)) {
             messageInfoService.update(Wrappers.<MessageInfo>lambdaUpdate().set(MessageInfo::getTaskStatus, 1)
                     .eq(MessageInfo::getTakeUser, takeUser).eq(MessageInfo::getSendUser, sendUser));
         } else {

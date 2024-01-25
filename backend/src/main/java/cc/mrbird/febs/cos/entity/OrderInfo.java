@@ -77,6 +77,16 @@ public class OrderInfo implements Serializable {
     private String payDate;
 
     /**
+     * 发起人ID
+     */
+    private Integer userId;
+
+    /**
+     * 发起人收货地址
+     */
+    private Integer addressId;
+
+    /**
      * 完成时间
      */
     private String finishDate;

@@ -115,6 +115,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         OrderInfo orderInfo = this.getOne(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getCode, orderCode));
         result.put("order", orderInfo);
 
+        // 发起人
+        UserInfo userInfo = new UserInfo();
+
         // 商品信息
         CommodityInfo commodityInfo = commodityInfoService.getById(orderInfo.getCommodityId());
         result.put("commodity", commodityInfo);
@@ -124,8 +127,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         result.put("shop", shopInfo);
 
         // 订单详情
-        
-        return null;
+        result.put("detail", baseMapper.selectOrderDetail(orderCode));
+
+        return result;
     }
 
     /**

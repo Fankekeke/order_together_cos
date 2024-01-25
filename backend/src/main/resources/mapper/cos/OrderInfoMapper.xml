@@ -312,4 +312,9 @@
         AND oi.order_status != 1
         AND ui.id = #{ userId }
     </select>
+
+    <!-- 订单详情 -->
+    <select id="selectOrderDetail" resultType="java.util.LinkedHashMap">
+
+    </select>
 </mapper>

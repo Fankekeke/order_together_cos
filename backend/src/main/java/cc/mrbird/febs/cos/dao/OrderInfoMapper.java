@@ -113,4 +113,12 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> getOrderByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 订单详情
+     *
+     * @param orderCode 订单编号
+     * @return 结果
+     */
+    List<LinkedHashMap<String, Object>> selectOrderDetail(@Param("orderCode") String orderCode);
 }

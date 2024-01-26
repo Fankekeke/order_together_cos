@@ -27,6 +27,8 @@
         ci.content,
         ci.on_put AS onPut,
         si.introduction,
+        si.name AS shopName,
+        si.images AS shopAvatar,
         si.tag,
         ui.user_name AS userName,
         ui.avatar AS avatar,

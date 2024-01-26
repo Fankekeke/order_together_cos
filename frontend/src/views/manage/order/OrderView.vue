@@ -15,9 +15,9 @@
           {{ orderData.createDate }}
         </a-col>
         <a-col :span="8"><b>订单状态：</b>
-          <span v-if="orderData.orderStatus == 1">待付款</span>
-          <span v-if="orderData.orderStatus == 2">待收货</span>
-          <span v-if="orderData.orderStatus == 3">已收货</span>
+          <span v-if="orderData.orderStatus == 0">正在拼单</span>
+          <span v-if="orderData.orderStatus == 1">已完成</span>
+          <span v-if="orderData.orderStatus == 2">拼单失败</span>
         </a-col>
       </a-row>
       <br/>
@@ -68,18 +68,13 @@
           </a-tooltip>
         </a-col>
         <a-col :span="8"><b>商品类型：</b>
-          <span v-if="orderData.type == 1">上装</span>
-          <span v-if="orderData.type == 2">下装</span>
-          <span v-if="orderData.type == 3">首饰</span>
-          <span v-if="orderData.type == 4">鞋子</span>
-          <span v-if="orderData.type == 5">内衣</span>
-          <span v-if="orderData.type == 6">化妆品</span>
+          {{ orderData.typeName }}
         </a-col>
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>商品价格：</b>
-          ￥{{ orderData.price }}
+        <a-col :span="8"><b>价格：</b>
+          ￥{{ orderData.orderPrice }}
         </a-col>
         <a-col :span="8"><b>上架状态：</b>
           <a-tag v-if="orderData.onPut == 0" color="red">下架中</a-tag>

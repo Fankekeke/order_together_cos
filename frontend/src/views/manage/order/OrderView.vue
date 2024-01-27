@@ -51,8 +51,8 @@
         <a-col :span="24" v-if="detailTemp.length !== 0">
           <a-list item-layout="horizontal" :data-source="detailTemp">
             <a-list-item slot="renderItem" slot-scope="item, index">
-              <a-list-item-meta :description="item.userName">
-                <a slot="title">拼单时间：{{ item.createDate }}</a>
+              <a-list-item-meta :description="'拼单时间：' + item.createDate">
+                <a slot="title">{{ item.userName }}</a>
                 <a-avatar
                   slot="avatar"
                   shape="square"

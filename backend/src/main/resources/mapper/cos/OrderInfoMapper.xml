@@ -171,17 +171,28 @@
     <!-- 根据商铺获取订单统计 -->
     <select id="shopOrderRateByComm" resultType="java.util.LinkedHashMap">
         SELECT
-        COUNT( 1 ) AS orderNum,
-        IFNULL( SUM( oi.order_price ), 0 ) AS orderPrice,
-        ci.`name`
+            ci.id,
+            ci.NAME,
+            ifnull( temp1.orderNum, 0 ) AS orderNum,
+            ifnull( temp1.orderPrice, 0 ) AS orderPrice
         FROM
-        order_info oi
-        LEFT JOIN commodity_info ci ON ( ci.id = oi.commodity_id )
+            commodity_info ci
+                LEFT JOIN (
+                SELECT
+                    ci.id,
+                    COUNT( 1 ) AS orderNum,
+                    IFNULL( SUM( oi.order_price ), 0 ) AS orderPrice
+                FROM
+                    order_info oi
+                        LEFT JOIN commodity_info ci ON ( ci.id = oi.commodity_id )
+                WHERE
+                    1 = 1
+                  AND CI.shop_id = #{ shopId }
+                GROUP BY
+                    ci.id
+            ) temp1 ON ( temp1.id = ci.id )
         WHERE
-        1 = 1
-        AND CI.shop_id = #{ shopId }
-        GROUP BY
-        ci.id
+            ci.shop_id = #{ shopId }
     </select>
 
     <!-- 订单详情 -->

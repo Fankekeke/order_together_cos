@@ -325,6 +325,28 @@
 
     <!-- 订单详情 -->
     <select id="selectOrderDetail" resultType="java.util.LinkedHashMap">
-
+        select
+        od.id,
+        od.code,
+        od.user_id,
+        od.order_status,
+        od.create_date,
+        od.address_id,
+        ui.user_name,
+        ui.avatar,
+        ui.code as userCode,
+        ai.address,
+        ai.name as taskUserName
+        from
+            order_detail od
+                left join user_info ui on
+                (ui.id = od.user_id)
+                left join address_info ai on
+                (ai.id = od.address_id)
+        where
+            1 = 1
+            AND od.code = #{orderCode}
+        order by
+            create_date desc
     </select>
 </mapper>

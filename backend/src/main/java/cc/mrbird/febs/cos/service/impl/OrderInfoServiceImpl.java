@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -105,8 +106,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>() {
             {
                 put("order", null);
-                put("detail", null);
+                put("detail", Collections.emptyList());
                 put("shop", null);
+                put("user", null);
                 put("commodity", null);
             }
         };
@@ -117,6 +119,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         // 发起人
         UserInfo userInfo = new UserInfo();
+        result.put("user", userInfo);
 
         // 商品信息
         CommodityInfo commodityInfo = commodityInfoService.getById(orderInfo.getCommodityId());

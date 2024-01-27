@@ -39,7 +39,7 @@ public class OrderInfoController {
      */
     @GetMapping("/order/detail/{orderCode}")
     public R selectOrderDetail(@PathVariable("orderCode") String orderCode) {
-        return R.ok();
+        return R.ok(orderInfoService.selectOrderDetail(orderCode));
     }
 
     /**

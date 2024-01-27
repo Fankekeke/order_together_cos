@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="订单详情" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="订单详情" @cancel="onClose" :width="1000">
     <template slot="footer">
       <a-button key="back" @click="onClose" type="danger">
         关闭
@@ -22,7 +22,7 @@
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col :span="8"><b>购买人：</b>
+        <a-col :span="8"><b>发起人：</b>
           <a-popover>
             <template slot="content">
               <a-avatar shape="square" size={132} icon="user" :src="orderData.avatar" />
@@ -41,6 +41,26 @@
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col :span="24"><b>收获地址：</b>
           {{ orderData.address }}
+        </a-col>
+      </a-row>
+      <br/>
+      <br/>
+      <a-row style="padding-left: 24px;padding-right: 24px;">
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">拼单信息</span>
+        </a-col>
+        <a-col :span="24" v-if="detailTemp.length !== 0">
+          <a-list item-layout="horizontal" :data-source="detailTemp">
+            <a-list-item slot="renderItem" slot-scope="item, index">
+              <a-list-item-meta :description="item.userName">
+                <a slot="title">拼单时间：{{ item.createDate }}</a>
+                <a-avatar
+                  slot="avatar"
+                  shape="square"
+                  :src="item.avatar"
+                />
+              </a-list-item-meta>
+            </a-list-item>
+          </a-list>
         </a-col>
       </a-row>
       <br/>
@@ -183,7 +203,9 @@ export default {
       fileList: [],
       previewVisible: false,
       previewImage: '',
-      replyList: []
+      replyList: [],
+      orderTemp: null,
+      detailTemp: []
     }
   },
   watch: {
@@ -191,11 +213,15 @@ export default {
       if (value && this.orderData.images !== null && this.orderData.images !== '') {
         this.imagesInit(this.orderData.images)
       }
-      this.dataInit()
+      this.dataInit(this.orderData.code)
     }
   },
   methods: {
-    dataInit () {
+    dataInit (orderCode) {
+      this.$get(`/cos/order-info/order/detail/${orderCode}`).then((r) => {
+        this.orderTemp = r.data.order
+        this.detailTemp = r.data.detail
+      })
       this.$get('/cos/evaluation/getEvaluationByOrderId', {id: this.orderData.id}).then((r) => {
         let replyList = []
         r.data.data.forEach(item => {

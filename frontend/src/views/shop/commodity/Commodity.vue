@@ -340,6 +340,7 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
+      params.shopId = this.currentUser.userId
       this.$get('/cos/commodity-info/page', {
         ...params
       }).then((r) => {

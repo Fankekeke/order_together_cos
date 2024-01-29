@@ -3,7 +3,9 @@ package cc.mrbird.febs.cos.controller;
 
 import cc.mrbird.febs.common.utils.R;
 import cc.mrbird.febs.cos.entity.CommodityInfo;
+import cc.mrbird.febs.cos.entity.ShopInfo;
 import cc.mrbird.febs.cos.service.ICommodityInfoService;
+import cc.mrbird.febs.cos.service.IShopInfoService;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -24,6 +26,8 @@ import java.util.List;
 public class CommodityInfoController {
 
     private final ICommodityInfoService commodityInfoService;
+
+    private final IShopInfoService shopInfoService;
 
     /**
      * 分页获取商品信息

@@ -308,6 +308,7 @@ export default {
       if (params.auditStatus === undefined) {
         delete params.auditStatus
       }
+      params.userId = this.currentUser.userId
       this.$get('/cos/audit-info/page', {
         ...params
       }).then((r) => {

@@ -21,21 +21,6 @@
                 <a-input v-model="queryParams.userName"/>
               </a-form-item>
             </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="商品类型"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-select v-model="queryParams.type" allowClear>
-                  <a-select-option value="1">上装</a-select-option>
-                  <a-select-option value="2">下装</a-select-option>
-                  <a-select-option value="3">首饰</a-select-option>
-                  <a-select-option value="4">鞋子</a-select-option>
-                  <a-select-option value="5">内衣</a-select-option>
-                  <a-select-option value="6">化妆品</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
           </div>
           <span style="float: right; margin-top: 3px;">
             <a-button type="primary" @click="search">查询</a-button>
@@ -83,7 +68,7 @@
               <template slot="title">
                 {{ record.address }}
               </template>
-              {{ record.address.slice(0, 15) }} ...
+              {{ record.address.slice(0, 10) }} ...
             </a-tooltip>
           </template>
         </template>
@@ -153,40 +138,29 @@ export default {
         dataIndex: 'orderStatus',
         customRender: (text, row, index) => {
           switch (text) {
-            case 1:
-              return <a-tag>待付款</a-tag>
-            case 2:
-              return <a-tag>待收货</a-tag>
-            case 3:
-              return <a-tag>已收货</a-tag>
+            case '0':
+              return <a-tag>正在拼单</a-tag>
+            case '1':
+              return <a-tag>已完成</a-tag>
+            case '2':
+              return <a-tag>拼单失败</a-tag>
             default:
               return '- -'
           }
         }
       }, {
         title: '商品类型',
-        dataIndex: 'type',
+        dataIndex: 'typeName',
         customRender: (text, row, index) => {
-          switch (text) {
-            case 1:
-              return <a-tag>上装</a-tag>
-            case 2:
-              return <a-tag>下装</a-tag>
-            case 3:
-              return <a-tag>首饰</a-tag>
-            case 4:
-              return <a-tag>鞋子</a-tag>
-            case 5:
-              return <a-tag>内衣</a-tag>
-            case 6:
-              return <a-tag>化妆品</a-tag>
-            default:
-              return '- -'
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
           }
         }
       }, {
         title: '订单价格',
-        dataIndex: 'price',
+        dataIndex: 'orderPrice',
         customRender: (text, row, index) => {
           if (text !== null) {
             return '￥' + text
@@ -195,7 +169,7 @@ export default {
           }
         }
       }, {
-        title: '订单所属',
+        title: '发起人',
         dataIndex: 'userName',
         scopedSlots: { customRender: 'userNameShow' }
       }, {
@@ -332,6 +306,7 @@ export default {
       if (params.type === undefined) {
         delete params.type
       }
+      params.shopId = this.currentUser.userId
       this.$get('/cos/order-info/page', {
         ...params
       }).then((r) => {

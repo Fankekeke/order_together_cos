@@ -26,6 +26,9 @@
         <if test="auditInfo.userName != null and auditInfo.userName != ''">
             AND ui.user_name LIKE CONCAT('%',#{auditInfo.userName},'%')
         </if>
+        <if test="auditInfo.userId != null">
+            AND ai.user_id = #{auditInfo.userId}
+        </if>
         ORDER BY
         ai.create_date DESC
     </select>

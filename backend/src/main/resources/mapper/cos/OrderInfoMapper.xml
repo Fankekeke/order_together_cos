@@ -60,6 +60,9 @@
         <if test="orderInfo.type != null and orderInfo.type != ''">
             AND ci.type = #{orderInfo.type}
         </if>
+        <if test="orderInfo.shopId != null">
+            AND si.user_id = #{orderInfo.shopId}
+        </if>
         ORDER BY
         oi.create_date desc
     </select>

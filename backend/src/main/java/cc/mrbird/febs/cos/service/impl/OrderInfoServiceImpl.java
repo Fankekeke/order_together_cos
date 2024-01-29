@@ -95,6 +95,17 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     /**
+     * 商家首页统计
+     *
+     * @param shopId 商家ID
+     * @return 结果
+     */
+    @Override
+    public LinkedHashMap<String, Object> selectHomeDataByShop(Integer shopId) {
+        return null;
+    }
+
+    /**
      * 获取订单详情
      *
      * @param orderCode 订单编号

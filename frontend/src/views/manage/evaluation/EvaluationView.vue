@@ -42,7 +42,7 @@
           </a-popover>
         </a-col>
         <a-col :span="8"><b>收货人：</b>
-          {{ evaluationData.taskUserName }}
+          {{ evaluationData.userName }}
         </a-col>
         <a-col :span="8"><b>联系方式：</b>
           {{ evaluationData.phone }}

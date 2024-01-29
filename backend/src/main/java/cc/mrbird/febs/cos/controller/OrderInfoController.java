@@ -54,6 +54,17 @@ public class OrderInfoController {
     }
 
     /**
+     * 商家首页统计
+     *
+     * @param shopId 商家ID
+     * @return 结果
+     */
+    @GetMapping("/home/data/shop/{shopId}")
+    public R selectHomeDataByShop(@PathVariable("shopId") Integer shopId) {
+        return R.ok();
+    }
+
+    /**
      * 根据用户ID获取订单
      *
      * @return 结果

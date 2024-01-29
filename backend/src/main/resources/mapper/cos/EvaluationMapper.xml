@@ -23,6 +23,8 @@
         si.tag,
         ct.type_name,
         ui.user_name AS userName,
+        ai.phone,
+        ai.address,
         ui.avatar,
         su.user_name AS shopName,
         su.avatar AS shopAvatar
@@ -34,6 +36,7 @@
         LEFT JOIN commodity_type ct ON ( ct.id = ci.type )
         LEFT JOIN shop_info si ON ( si.id = ci.shop_id )
         LEFT JOIN user_info ui ON ( ui.id = od.user_id )
+        LEFT JOIN address_info ai ON (ai.id = od.address_id)
         LEFT JOIN user_info su ON ( su.id = si.user_id )
         WHERE
         1 = 1

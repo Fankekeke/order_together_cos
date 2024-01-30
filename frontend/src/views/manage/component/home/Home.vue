@@ -1,19 +1,6 @@
 <template>
   <div>
     <a-row v-if="user.roleId == 75" style="width: 100%;margin-top: 30px;margin-bottom: 50px">
-      <div>
-        <a-col :span="22" v-if="newsList.length > 0">
-          <a-alert
-            banner
-            :message="newsContent"
-            type="info"
-          />
-        </a-col>
-        <a-col :span="2">
-          <a-button type="primary" style="margin-top: 2px;margin-left: 10px" @click="newsNext">下一页</a-button>
-        </a-col>
-      </div>
-      <br/>
       <br/>
       <a-col :span="24" style="padding-left: 30px">
         <div style="font-size: 20px;font-family: SimHei;margin-top: 50px">我的消息</div>
@@ -32,27 +19,6 @@
         </a-list>
       </a-col>
       <br/>
-      <br/>
-      <a-col :span="24" style="padding-left: 30px">
-        <div style="font-size: 20px;font-family: SimHei;margin-top: 30px;margin-bottom: 18px">待缴费</div>
-        <a-row>
-          <a-col :span="6" v-for="(item, index) in oweBookList" :key="index">
-            <a-card :bordered="false" hoverable>
-              <a-carousel autoplay style="height: 150px;" v-if="item.images !== undefined && item.images !== ''">
-                <div style="width: 100%;height: 150px" v-for="(item, index) in item.images.split(',')" :key="index">
-                  <img :src="'http://127.0.0.1:9527/imagesWeb/'+item" style="width: 100%;height: 250px">
-                </div>
-              </a-carousel>
-              <a-card-meta :title="item.bookName" :description="item.bookName.slice(0, 18)+'...'" style="margin-top: 10px"></a-card-meta>
-              <div style="font-size: 12px;font-family: SimHei;margin-top: 8px">
-                <span>{{ item.auther }}</span> |
-                <span>{{ item.press }}</span> |
-                <span style="color: #f5222d; font-size: 13px;">￥{{ item.price }}</span>
-              </div>
-            </a-card>
-          </a-col>
-        </a-row>
-      </a-col>
     </a-row>
     <a-row style="margin-top: 15px">
       <a-col :span="24">
@@ -101,58 +67,6 @@
                   <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
                   <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
                     {{ titleData.yearOrderPrice }}
-                    <span style="font-size: 20px;margin-top: 3px">元</span>
-                  </a-col>
-                </a-row>
-              </a-card>
-            </a-col>
-          </a-row>
-        </div>
-        <div style="background: #ECECEC; padding: 30px;" v-if="user.roleId == 75">
-          <a-row :gutter="16">
-            <a-col :span="6">
-              <a-card hoverable>
-                <a-row>
-                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">我的图书</a-col>
-                  <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
-                  <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
-                    {{ studentTitleData.bookNum }}
-                    <span style="font-size: 20px;margin-top: 3px">本</span>
-                  </a-col>
-                </a-row>
-              </a-card>
-            </a-col>
-            <a-col :span="6">
-              <a-card hoverable>
-                <a-row>
-                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">未缴费图书</a-col>
-                  <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
-                  <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
-                    {{ studentTitleData.bookOweNum }}
-                    <span style="font-size: 20px;margin-top: 3px">本</span>
-                  </a-col>
-                </a-row>
-              </a-card>
-            </a-col>
-            <a-col :span="6">
-              <a-card hoverable>
-                <a-row>
-                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">已缴费图书</a-col>
-                  <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
-                  <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
-                    {{ studentTitleData.bookOwnNum }}
-                    <span style="font-size: 20px;margin-top: 3px">本</span>
-                  </a-col>
-                </a-row>
-              </a-card>
-            </a-col>
-            <a-col :span="6">
-              <a-card hoverable>
-                <a-row>
-                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">欠缴金额</a-col>
-                  <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
-                  <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
-                    {{ studentTitleData.owePrice }}
                     <span style="font-size: 20px;margin-top: 3px">元</span>
                   </a-col>
                 </a-row>
@@ -381,7 +295,6 @@ export default {
     console.log(this.user)
     this.loading = true
     this.selectHomeData()
-    this.selectHomeByStudentData()
     setTimeout(() => {
       this.loading = false
     }, 200)
@@ -396,7 +309,7 @@ export default {
       this.newsContent = `《${this.newsList[this.newsPage].title}》 ${this.newsList[this.newsPage].content}`
     },
     selectHomeData () {
-      this.$get('/cos/pay-record/home/data').then((r) => {
+      this.$get(`/cos/order-info/home/data/shop/${this.user.userId}`).then((r) => {
         let titleData = { orderCode: r.data.orderCode, orderPrice: r.data.orderPrice, pharmacyNum: r.data.pharmacyNum, staffNum: r.data.staffNum }
         this.$emit('setTitle', titleData)
         this.titleData.monthOrderNum = r.data.monthOrderNum

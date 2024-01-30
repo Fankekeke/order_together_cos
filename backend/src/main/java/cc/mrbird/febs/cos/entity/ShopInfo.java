@@ -44,6 +44,12 @@ public class ShopInfo implements Serializable {
      */
     private String tag;
 
+    /**
+     * 头像
+     */
+    @TableField(exist = false)
+    private String avatar;
+
     @TableField(exist = false)
     private String userName;
 

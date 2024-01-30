@@ -180,6 +180,7 @@ export default {
       })
       this.form.validateFields((err, values) => {
         values.images = images.length > 0 ? images.join(',') : null
+        values.shopId = this.currentUser.userId
         if (!err) {
           this.loading = true
           this.$post('/cos/commodity-info', {

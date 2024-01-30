@@ -1,6 +1,8 @@
 package cc.mrbird.febs.cos.service.impl;
 
+import cc.mrbird.febs.cos.dao.OrderInfoMapper;
 import cc.mrbird.febs.cos.entity.CommodityInfo;
+import cc.mrbird.febs.cos.entity.OrderInfo;
 import cc.mrbird.febs.cos.entity.ShopInfo;
 import cc.mrbird.febs.cos.dao.ShopInfoMapper;
 import cc.mrbird.febs.cos.service.ICommodityInfoService;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
 
     private final ICommodityInfoService commodityInfoService;
 
+    private final OrderInfoMapper orderInfoMapper;
+
     /**
      * 分页查询商铺信息
      *
@@ -35,6 +40,33 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
     @Override
     public IPage<LinkedHashMap<String, Object>> getShopInfoByPage(Page<ShopInfo> page, ShopInfo shopInfo) {
         return baseMapper.getShopInfoByPage(page, shopInfo);
+    }
+
+    /**
+     * 获取商铺信息详情
+     *
+     * @param shopId 商铺ID
+     * @return 结果
+     */
+    @Override
+    public LinkedHashMap<String, Object> selectShopDetail(Integer shopId) {
+        // 返回数据
+        LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>() {
+            {
+                put("user", null);
+                put("order", Collections.emptyList());
+            }
+        };
+
+        ShopInfo shopInfo = this.getOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getUserId, shopId));
+
+        // 商铺信息
+        LinkedHashMap<String, Object> shop = baseMapper.selectShopDetail(shopInfo.getId());
+        result.put("user", shop);
+        // 商铺订单
+        List<OrderInfo> orderList = orderInfoMapper.selectList(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getShopId, shopInfo.getId()));
+        result.put("order", orderList);
+        return result;
     }
 
     /**

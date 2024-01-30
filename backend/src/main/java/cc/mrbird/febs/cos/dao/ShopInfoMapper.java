@@ -30,4 +30,11 @@ public interface ShopInfoMapper extends BaseMapper<ShopInfo> {
      */
     List<LinkedHashMap<String, Object>> shopInfoHot();
 
+    /**
+     * 获取商铺信息详情
+     *
+     * @param shopId 商铺ID
+     * @return 结果
+     */
+    LinkedHashMap<String, Object> selectShopDetail(@Param("shopId") Integer shopId);
 }

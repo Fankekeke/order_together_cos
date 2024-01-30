@@ -3,102 +3,41 @@
     <a-col :span="6">
       <div style="background:#ECECEC; padding:30px;margin-top: 30px">
         <a-card :bordered="false">
-          <b style="font-size: 15px">我的信息</b>
+          <b style="font-size: 15px">店铺信息</b>
         </a-card>
         <a-card :bordered="false">
           <a-form :form="form" layout="vertical">
             <a-row :gutter="20">
               <a-col :span="12">
-                <a-form-item label='学生姓名' v-bind="formItemLayout">
-                  <a-input v-decorator="[
-            'studentName',
-            { rules: [{ required: true, message: '请输入学生姓名!' }] }
-            ]"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label='学号' v-bind="formItemLayout">
+                <a-form-item label='店铺编号' v-bind="formItemLayout">
                   <a-input disabled v-decorator="[
-            'code',
-            { rules: [{ required: true, message: '请输入学号!' }] }
-            ]"/>
+                  'code',
+                  { rules: [{ required: true, message: '请输入店铺编号!' }] }
+                  ]"/>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
-                <a-form-item label='所属班级' v-bind="formItemLayout">
-                  <a-select disabled v-decorator="[
-              'classId',
-              { rules: [{ required: true, message: '请输入所属班级!' }] }
-              ]">
-                    <a-select-option :value="item.id" v-for="(item, index) in classList" :key="index">{{ item.className }}</a-select-option>
-                  </a-select>
+                <a-form-item label='负责人' v-bind="formItemLayout">
+                  <a-input disabled v-decorator="[
+                  'userName',
+                  { rules: [{ required: true, message: '请输入负责人!' }] }
+                  ]"/>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
-                <a-form-item label='性别' v-bind="formItemLayout">
-                  <a-select v-decorator="[
-              'sex',
-              { rules: [{ required: true, message: '请输入性别!' }] }
-              ]">
-                    <a-select-option value="1">男</a-select-option>
-                    <a-select-option value="2">女</a-select-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label='省份' v-bind="formItemLayout">
+                <a-form-item label='标签' v-bind="formItemLayout">
                   <a-input v-decorator="[
-            'province',
-            { rules: [{ required: true, message: '请输入省份!' }] }
-            ]"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label='市区' v-bind="formItemLayout">
-                  <a-input v-decorator="[
-            'city',
-            { rules: [{ required: true, message: '请输入市区!' }] }
-            ]"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label='区' v-bind="formItemLayout">
-                  <a-input v-decorator="[
-            'area',
-            { rules: [{ required: true, message: '请输入区!' }] }
-            ]"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label='出生日期' v-bind="formItemLayout">
-                  <a-date-picker style="width: 100%;" v-decorator="[
-            'birthday',
-            { rules: [{ required: true, message: '请输入出生日期!' }] }
-            ]"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label='联系方式' v-bind="formItemLayout">
-                  <a-input v-decorator="[
-            'phone',
-            { rules: [{ required: true, message: '请输入联系方式!' }] }
-            ]"/>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label='所属专业' v-bind="formItemLayout">
-                  <a-input v-decorator="[
-            'major',
-            { rules: [{ required: true, message: '请输入所属专业!' }] }
-            ]"/>
+                  'tag',
+                  { rules: [{ required: true, message: '请输入标签!' }] }
+                  ]"/>
                 </a-form-item>
               </a-col>
               <a-col :span="24">
-                <a-form-item label='详细地址' v-bind="formItemLayout">
+                <a-form-item label='介绍' v-bind="formItemLayout">
                   <a-textarea :rows="4" v-decorator="[
-            'address',
-             { rules: [{ required: true, message: '请输入详细地址!' }] }
-            ]"/>
+                  'introduction',
+                   { rules: [{ required: true, message: '请输入介绍!' }] }
+                  ]"/>
                 </a-form-item>
               </a-col>
               <a-col :span="24">
@@ -174,14 +113,21 @@ export default {
   },
   mounted () {
     this.dataInit()
-    this.selectClassList()
   },
   methods: {
     moment,
-    selectClassList () {
-      this.$get('/cos/class-info/list').then((r) => {
-        this.classList = r.data.data
-      })
+    handleCancel () {
+      this.previewVisible = false
+    },
+    async handlePreview (file) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj)
+      }
+      this.previewImage = file.url || file.preview
+      this.previewVisible = true
+    },
+    picHandleChange ({ fileList }) {
+      this.fileList = fileList
     },
     isDuringDate (beginDateStr, endDateStr, curDataStr) {
       let curDate = new Date(curDataStr)
@@ -203,7 +149,7 @@ export default {
     },
     dataInit () {
       this.dataLoading = true
-      this.$get(`/cos/user-info/detail/${this.currentUser.userId}`).then((r) => {
+      this.$get(`/cos/shop-info/detail/${this.currentUser.userId}`).then((r) => {
         this.rowId = r.data.user.id
         this.setFormValues(r.data.user)
         this.courseInfo = r.data.order

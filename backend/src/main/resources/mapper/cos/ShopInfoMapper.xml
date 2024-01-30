@@ -47,4 +47,20 @@
         1 = 1
     </select>
 
+    <!-- 获取商铺信息详情 -->
+    <select id="selectShopDetail" resultType="java.util.LinkedHashMap">
+        SELECT
+        si.id,
+        si.`code`,
+        si.introduction,
+        si.tag,
+        ui.user_name AS userName,
+        ui.avatar
+        FROM
+        shop_info si
+        LEFT JOIN user_info ui ON ( ui.id = si.user_id )
+        WHERE
+        1 = 1
+        AND si.id = #{shopId}
+    </select>
 </mapper>

@@ -34,6 +34,17 @@ public class ShopInfoController {
     }
 
     /**
+     * 获取商铺信息详情
+     *
+     * @param shopId 商铺ID
+     * @return 结果
+     */
+    @GetMapping("/detail/{shopId}")
+    public R detail(@PathVariable("shopId") Integer shopId) {
+        return R.ok(shopInfoService.selectShopDetail(shopId));
+    }
+
+    /**
      * 删除商铺信息
      *
      * @param ids 主键

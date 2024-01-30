@@ -50,7 +50,7 @@ public class UserInfo implements Serializable {
     private Integer sex;
 
     /**
-     * 用户类型 1.普通用户 2.设计者
+     * 用户类型 1.普通用户 2.商铺
      */
     private Integer type;
 

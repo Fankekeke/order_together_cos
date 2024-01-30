@@ -24,6 +24,14 @@ public interface IShopInfoService extends IService<ShopInfo> {
     IPage<LinkedHashMap<String, Object>> getShopInfoByPage(Page<ShopInfo> page, ShopInfo shopInfo);
 
     /**
+     * 获取商铺信息详情
+     *
+     * @param shopId 商铺ID
+     * @return 结果
+     */
+    LinkedHashMap<String, Object> selectShopDetail(Integer shopId);
+
+    /**
      * 查询商铺信息
      *
      * @return 结果

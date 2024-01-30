@@ -82,6 +82,11 @@ public class CommodityInfoController {
      */
     @PostMapping
     public R save(CommodityInfo commodityInfo) {
+        // 获取商铺信息
+        ShopInfo shopInfo = shopInfoService.getOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getUserId, commodityInfo.getShopId()));
+        if (shopInfo != null) {
+            commodityInfo.setShopId(shopInfo.getId());
+        }
         commodityInfo.setCreateDate(DateUtil.formatDateTime(new Date()));
         commodityInfo.setCode("COMM-" + System.currentTimeMillis());
         return R.ok(commodityInfoService.save(commodityInfo));

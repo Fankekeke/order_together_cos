@@ -1,14 +1,14 @@
 package cc.mrbird.febs.cos.service.impl;
 
 import cc.mrbird.febs.cos.dao.ShopInfoMapper;
-import cc.mrbird.febs.cos.entity.CommodityInfo;
-import cc.mrbird.febs.cos.entity.OrderInfo;
+import cc.mrbird.febs.cos.entity.*;
 import cc.mrbird.febs.cos.dao.OrderInfoMapper;
-import cc.mrbird.febs.cos.entity.ShopInfo;
-import cc.mrbird.febs.cos.entity.UserInfo;
+import cc.mrbird.febs.cos.service.IBulletinInfoService;
 import cc.mrbird.febs.cos.service.ICommodityInfoService;
 import cc.mrbird.febs.cos.service.IOrderInfoService;
 import cc.mrbird.febs.cos.service.IUserInfoService;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +34,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private final ICommodityInfoService commodityInfoService;
 
     private final ShopInfoMapper shopInfoMapper;
+
+    private final IBulletinInfoService bulletinInfoService;
 
     /**
      * 分页查询订单信息
@@ -102,7 +105,42 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
      */
     @Override
     public LinkedHashMap<String, Object> selectHomeDataByShop(Integer shopId) {
-        return null;
+        // 返回数据
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+
+        // 商家信息
+        ShopInfo shopInfo = shopInfoMapper.selectOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getUserId, shopId));
+
+        List<OrderInfo> orderInfoList = this.list(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getShopId, shopInfo.getId()).eq(OrderInfo::getOrderStatus, 1));
+        // 总订单数量
+        result.put("orderCode", orderInfoList.size());
+        // 总收益
+        result.put("orderPrice", orderInfoList.stream().map(e -> NumberUtil.mul(e.getOrderPrice(), e.getUserNum())).reduce(BigDecimal.ZERO, BigDecimal::add));
+        // 商品数量
+        result.put("pharmacyNum", commodityInfoService.count(Wrappers.<CommodityInfo>lambdaQuery().eq(CommodityInfo::getShopId, shopInfo.getId())));
+
+        // 本月订单数量
+        List<OrderInfo> orderList = baseMapper.selectOrderByMonth(shopInfo.getId());
+        result.put("monthOrderNum", CollectionUtil.isEmpty(orderList) ? 0 : orderList.size());
+        BigDecimal orderPrice = orderList.stream().map(e -> NumberUtil.mul(e.getOrderPrice(), e.getUserNum())).reduce(BigDecimal.ZERO, BigDecimal::add);
+        // 获取本月收益
+        result.put("monthOrderPrice", orderPrice);
+
+        // 本年订单数量
+        List<OrderInfo> orderYearList = baseMapper.selectOrderByYear(shopInfo.getId());
+        result.put("yearOrderNum", CollectionUtil.isEmpty(orderYearList) ? 0 : orderYearList.size());
+        // 本年总收益
+        BigDecimal orderYearPrice = orderYearList.stream().map(e -> NumberUtil.mul(e.getOrderPrice(), e.getUserNum())).reduce(BigDecimal.ZERO, BigDecimal::add);
+        result.put("yearOrderPrice", orderYearPrice);
+
+        // 公告信息
+        result.put("bulletin", bulletinInfoService.list(Wrappers.<BulletinInfo>lambdaQuery().eq(BulletinInfo::getRackUp, 1)));
+
+        // 近十天内订单统计
+        result.put("orderNumWithinDays", baseMapper.selectOrderNumWithinDays(shopInfo.getId()));
+        // 近十天内收益统计
+        result.put("orderPriceWithinDays", baseMapper.selectOrderPriceWithinDays(shopInfo.getId()));
+        return result;
     }
 
     /**

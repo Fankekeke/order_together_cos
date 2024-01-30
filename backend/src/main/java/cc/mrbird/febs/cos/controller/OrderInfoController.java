@@ -61,7 +61,7 @@ public class OrderInfoController {
      */
     @GetMapping("/home/data/shop/{shopId}")
     public R selectHomeDataByShop(@PathVariable("shopId") Integer shopId) {
-        return R.ok();
+        return R.ok(orderInfoService.selectHomeDataByShop(shopId));
     }
 
     /**

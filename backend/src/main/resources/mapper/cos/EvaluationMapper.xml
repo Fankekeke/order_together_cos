@@ -52,6 +52,9 @@
         <if test="evaluation.type != null and evaluation.type != ''">
             AND ci.type = #{evaluation.type}
         </if>
+        <if test="evaluation.shopId != null">
+            AND si.sys_user_id = #{evaluation.shopId}
+        </if>
         ORDER BY eva.create_date
     </select>
 

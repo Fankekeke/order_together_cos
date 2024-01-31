@@ -61,7 +61,7 @@
             AND ci.type = #{orderInfo.type}
         </if>
         <if test="orderInfo.shopId != null">
-            AND si.user_id = #{orderInfo.shopId}
+            AND si.sys_user_id = #{orderInfo.shopId}
         </if>
         ORDER BY
         oi.create_date desc

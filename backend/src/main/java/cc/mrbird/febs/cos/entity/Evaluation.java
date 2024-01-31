@@ -63,4 +63,6 @@ public class Evaluation implements Serializable {
     @TableField(exist = false)
     private Integer type;
 
+    @TableField(exist = false)
+    private Integer shopId;
 }

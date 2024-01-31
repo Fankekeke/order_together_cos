@@ -277,6 +277,7 @@ export default {
       if (params.type === undefined) {
         delete params.type
       }
+      params.shopId = this.currentUser.userId
       this.$get('/cos/evaluation/page', {
         ...params
       }).then((r) => {

@@ -31,7 +31,7 @@
         WHERE
         1 = 1
         <if test="commodityInfo.shopId != null">
-            AND si.user_id = #{commodityInfo.shopId}
+            AND si.sys_user_id = #{commodityInfo.shopId}
         </if>
         <if test="commodityInfo.code != null and commodityInfo.code != ''">
             AND ci.code LIKE CONCAT('%',#{commodityInfo.code},'%')

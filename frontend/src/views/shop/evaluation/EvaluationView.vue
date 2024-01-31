@@ -42,7 +42,7 @@
           </a-popover>
         </a-col>
         <a-col :span="8"><b>收货人：</b>
-          {{ evaluationData.taskUserName }}
+          {{ evaluationData.userName }}
         </a-col>
         <a-col :span="8"><b>联系方式：</b>
           {{ evaluationData.phone }}
@@ -112,12 +112,12 @@
             @preview="handlePreview"
             @change="picHandleChange"
           >
-<!--            <div v-if="fileList.length < 8">-->
-<!--              <a-icon type="plus" />-->
-<!--              <div class="ant-upload-text">-->
-<!--                Upload-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div v-if="fileList.length < 8">-->
+            <!--              <a-icon type="plus" />-->
+            <!--              <div class="ant-upload-text">-->
+            <!--                Upload-->
+            <!--              </div>-->
+            <!--            </div>-->
           </a-upload>
           <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
             <img alt="example" style="width: 100%" :src="previewImage" />

@@ -343,7 +343,7 @@ export default {
       })
     },
     selectHomeByStudentData () {
-      if (this.user.roleId == '75') {
+      if (this.user.roleId === '75') {
         this.$get(`/cos/pay-record/home/data/student/${this.user.userId}`).then((r) => {
           let titleData = { bookNum: r.data.bookNum, bookOweNum: r.data.bookOweNum, bookOwnNum: r.data.bookOwnNum, owePrice: r.data.owePrice }
           this.studentTitleData = titleData

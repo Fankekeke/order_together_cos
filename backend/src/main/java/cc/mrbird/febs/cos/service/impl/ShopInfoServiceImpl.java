@@ -58,7 +58,7 @@ public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> i
             }
         };
 
-        ShopInfo shopInfo = this.getOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getUserId, shopId));
+        ShopInfo shopInfo = this.getOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getSysUserId, shopId));
 
         // 商铺信息
         LinkedHashMap<String, Object> shop = baseMapper.selectShopDetail(shopInfo.getId());

@@ -3,7 +3,7 @@
     <a-col :span="6">
       <div style="background:#ECECEC; padding:30px;margin-top: 30px">
         <a-card :bordered="false">
-          <b style="font-size: 15px">店铺信息</b>
+          <b style="font-size: 15px;font-family: SimHei">店铺信息</b>
         </a-card>
         <a-card :bordered="false">
           <a-form :form="form" layout="vertical">
@@ -114,6 +114,9 @@ export default {
       formItemLayout,
       form: this.$form.createForm(this),
       loading: false,
+      fileList: [],
+      previewVisible: false,
+      previewImage: '',
       courseInfo: [],
       dataLoading: false,
       classList: []
@@ -150,7 +153,7 @@ export default {
       let listData = []
       this.courseInfo.forEach(item => {
         if ((moment(value).format('YYYY-MM-DD')) === (moment(item.createDate).format('YYYY-MM-DD'))) {
-          listData.push({type: 'success', content: item.remark})
+          listData.push({type: 'success', content: '✔'})
         }
       })
       return listData || []

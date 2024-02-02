@@ -437,7 +437,7 @@ export default {
       this.homeData()
     }).catch((r) => {
       console.error(r)
-      this.$message.error('获取首页信息失败')
+      // this.$message.error('获取首页信息失败')
     })
   }
 }

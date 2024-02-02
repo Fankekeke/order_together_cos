@@ -393,11 +393,11 @@
         DATE_SUB( curdate(), INTERVAL + 9 DAY )) spo
         LEFT JOIN order_info oi ON (
         DATE_FORMAT( oi.create_date, '%Y-%m-%d' ) = DATE_FORMAT( spo.days, '%Y-%m-%d' )
-        )
-        WHERE oi.order_status = 1
+        AND oi.order_status = 1
         <if test="shopId != null">
             AND oi.shop_id = #{shopId}
         </if>
+        )
         GROUP BY
         days
         ORDER BY
@@ -433,11 +433,11 @@
         DATE_SUB( curdate(), INTERVAL + 9 DAY )) spo
         LEFT JOIN order_info oi ON (
         DATE_FORMAT( oi.create_date, '%Y-%m-%d' ) = DATE_FORMAT( spo.days, '%Y-%m-%d' )
-        )
-        WHERE oi.order_status = 1
+        AND oi.order_status = 1
         <if test="shopId != null">
             AND oi.shop_id = #{shopId}
         </if>
+        )
         GROUP BY
         days
         ORDER BY

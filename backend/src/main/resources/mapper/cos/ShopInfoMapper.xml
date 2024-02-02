@@ -54,8 +54,8 @@
         si.`code`,
         si.introduction,
         si.tag,
-        ui.user_name AS userName,
-        ui.avatar
+        si.name AS name,
+        si.images
         FROM
         shop_info si
         LEFT JOIN user_info ui ON ( ui.id = si.user_id )

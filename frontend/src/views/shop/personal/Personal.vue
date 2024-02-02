@@ -17,10 +17,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="12">
-                <a-form-item label='负责人' v-bind="formItemLayout">
-                  <a-input disabled v-decorator="[
-                  'userName',
-                  { rules: [{ required: true, message: '请输入负责人!' }] }
+                <a-form-item label='店铺名称' v-bind="formItemLayout">
+                  <a-input v-decorator="[
+                  'name',
+                  { rules: [{ required: true, message: '请输入店铺名称!' }] }
                   ]"/>
                 </a-form-item>
               </a-col>
@@ -64,6 +64,9 @@
               </a-col>
             </a-row>
           </a-form>
+          <a-button key="submit" type="primary" :loading="loading" @click="handleSubmit">
+            修改
+          </a-button>
         </a-card>
       </div>
     </a-col>
@@ -169,17 +172,12 @@ export default {
     },
     setFormValues ({...user}) {
       this.rowId = user.id
-      let fields = ['studentName', 'code', 'phone', 'province', 'city', 'area', 'address', 'classId', 'sex', 'birthday', 'major']
+      let fields = ['introduction', 'code', 'introduction', 'tag', 'name', 'images']
       let obj = {}
       Object.keys(user).forEach((key) => {
-        if (key === 'images') {
+        if (key === 'images' && user[key] !== null) {
           this.fileList = []
           this.imagesInit(user['images'])
-        }
-        if (key === 'birthday') {
-          if (key === 'birthday' && user[key] != null) {
-            user[key] = moment(user[key])
-          }
         }
         if (fields.indexOf(key) !== -1) {
           this.form.getFieldDecorator(key)
@@ -201,10 +199,9 @@ export default {
       this.form.validateFields((err, values) => {
         values.id = this.rowId
         values.images = images.length > 0 ? images.join(',') : null
-        values.birthday = moment(values.birthday).format('YYYY-MM-DD')
         if (!err) {
           this.loading = true
-          this.$put('/cos/student-info', {
+          this.$put('/cos/shop-info', {
             ...values
           }).then((r) => {
             this.$message.success('修改信息成功')

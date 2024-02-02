@@ -45,6 +45,16 @@ public class ShopInfo implements Serializable {
     private String tag;
 
     /**
+     * 商铺名称
+     */
+    private String name;
+
+    /**
+     * 商铺图片
+     */
+    private String images;
+
+    /**
      * 账户用户ID
      */
     private Integer sysUserId;

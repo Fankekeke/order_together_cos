@@ -2,6 +2,7 @@ package cc.mrbird.febs.cos.controller;
 
 
 import cc.mrbird.febs.common.utils.R;
+import cc.mrbird.febs.cos.entity.BulletinInfo;
 import cc.mrbird.febs.cos.entity.ShopInfo;
 import cc.mrbird.febs.cos.service.IShopInfoService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -42,6 +43,17 @@ public class ShopInfoController {
     @GetMapping("/detail/{shopId}")
     public R detail(@PathVariable("shopId") Integer shopId) {
         return R.ok(shopInfoService.selectShopDetail(shopId));
+    }
+
+    /**
+     * 修改商铺信息
+     *
+     * @param shopInfo 商铺信息
+     * @return 结果
+     */
+    @PutMapping
+    public R edit(ShopInfo shopInfo) {
+        return R.ok(shopInfoService.updateById(shopInfo));
     }
 
     /**

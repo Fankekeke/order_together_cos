@@ -1,6 +1,6 @@
 <template>
   <div :class="[multipage === true ? 'multi-page':'single-page', 'not-menu-page', 'home-page']">
-    <a-row :gutter="8" class="head-info">
+    <a-row :gutter="8" class="head-info" v-if="user.roleId == 74">
       <a-card class="head-info-card">
         <a-col :span="12">
           <div class="head-info-avatar">
@@ -39,7 +39,7 @@
         </a-col>
       </a-card>
     </a-row>
-    <a-row :gutter="8" class="count-info">
+    <a-row :gutter="8" class="count-info" v-if="user.roleId == 74">
       <a-col :span="14" class="visit-count-wrapper">
         <a-row :gutter="8">
           <a-col :span="12">
@@ -86,7 +86,7 @@
         </div>
       </a-col>
     </a-row>
-    <a-row :gutter="8" class="count-info">
+    <a-row :gutter="8" class="count-info" v-if="user.roleId == 74">
       <a-col :span="10" style="margin-top: 10px;padding-left: 0px">
         <a-card class="visit-count" title="店铺收益统计">
           <a-skeleton active v-if="loading" />
@@ -132,12 +132,14 @@
         </a-card>
       </a-col>
     </a-row>
+    <home></home>
   </div>
 </template>
 <script>
 import HeadInfo from '@/views/common/HeadInfo'
 import {mapState} from 'vuex'
 import moment from 'moment'
+import Home from './manage/component/home/Home.vue'
 moment.locale('zh-cn')
 const listData = []
 for (let i = 0; i < 23; i++) {
@@ -153,7 +155,7 @@ for (let i = 0; i < 23; i++) {
 }
 export default {
   name: 'HomePage',
-  components: {HeadInfo},
+  components: {Home, HeadInfo},
   data () {
     return {
       series: [],

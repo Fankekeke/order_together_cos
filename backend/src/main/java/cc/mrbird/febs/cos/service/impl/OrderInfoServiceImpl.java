@@ -109,7 +109,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
 
         // 商家信息
-        ShopInfo shopInfo = shopInfoMapper.selectOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getUserId, shopId));
+        ShopInfo shopInfo = shopInfoMapper.selectOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getSysUserId, shopId));
 
         List<OrderInfo> orderInfoList = this.list(Wrappers.<OrderInfo>lambdaQuery().eq(OrderInfo::getShopId, shopInfo.getId()).eq(OrderInfo::getOrderStatus, 1));
         // 总订单数量

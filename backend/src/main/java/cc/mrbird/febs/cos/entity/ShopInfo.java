@@ -60,6 +60,11 @@ public class ShopInfo implements Serializable {
     private Integer sysUserId;
 
     /**
+     * 状态（0.未审核 1.已审核）
+     */
+    private String status;
+
+    /**
      * 头像
      */
     @TableField(exist = false)

@@ -135,6 +135,19 @@ export default {
         dataIndex: 'introduction',
         scopedSlots: { customRender: 'introductionShow' }
       }, {
+        title: '状态',
+        dataIndex: 'status',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case '0':
+              return <a-tag>未审核</a-tag>
+            case '1':
+              return <a-tag>已审核</a-tag>
+            default:
+              return '- -'
+          }
+        }
+      }, {
         title: '标签',
         dataIndex: 'tag',
         customRender: (text, row, index) => {

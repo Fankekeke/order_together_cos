@@ -13,7 +13,8 @@
         ui.user_name AS userName,
         ui.avatar,
         ai.status_date AS statusDate,
-        ai.images
+        ai.images,
+        si.status
         FROM
         shop_info si
         LEFT JOIN user_info ui ON ( ui.id = si.user_id )
@@ -54,6 +55,7 @@
         si.`code`,
         si.introduction,
         si.tag,
+        si.status,
         si.name AS name,
         si.images
         FROM

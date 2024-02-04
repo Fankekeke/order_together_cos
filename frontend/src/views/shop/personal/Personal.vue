@@ -3,7 +3,10 @@
     <a-col :span="6">
       <div style="background:#ECECEC; padding:30px;margin-top: 30px">
         <a-card :bordered="false">
-          <b style="font-size: 15px;font-family: SimHei">店铺信息</b>
+          <b style="font-size: 15px;font-family: SimHei">店铺信息 -
+            <span v-if="shopInfo != null && shopInfo.status == '0'" style="font-size: 13px;color: red;font-weight: 500">未审核</span>
+            <span v-if="shopInfo != null && shopInfo.status == '1'" style="font-size: 13px;color: green;font-weight: 500">已审核</span>
+          </b>
         </a-card>
         <a-card :bordered="false">
           <a-form :form="form" layout="vertical">
@@ -50,7 +53,7 @@
                     @preview="handlePreview"
                     @change="picHandleChange"
                   >
-                    <div v-if="fileList.length < 8">
+                    <div v-if="fileList.length < 1">
                       <a-icon type="plus" />
                       <div class="ant-upload-text">
                         Upload
@@ -122,7 +125,8 @@ export default {
       previewImage: '',
       courseInfo: [],
       dataLoading: false,
-      classList: []
+      classList: [],
+      shopInfo: null
     }
   },
   mounted () {
@@ -165,6 +169,7 @@ export default {
       this.dataLoading = true
       this.$get(`/cos/shop-info/detail/${this.currentUser.userId}`).then((r) => {
         this.rowId = r.data.user.id
+        this.shopInfo = r.data.user
         this.setFormValues(r.data.user)
         this.courseInfo = r.data.order
         this.dataLoading = false
@@ -185,6 +190,15 @@ export default {
         }
       })
       this.form.setFieldsValue(obj)
+    },
+    imagesInit (images) {
+      if (images !== null && images !== '') {
+        let imageList = []
+        images.split(',').forEach((image, index) => {
+          imageList.push({uid: index, name: image, status: 'done', url: 'http://127.0.0.1:9527/imagesWeb/' + image})
+        })
+        this.fileList = imageList
+      }
     },
     handleSubmit () {
       // 获取图片List

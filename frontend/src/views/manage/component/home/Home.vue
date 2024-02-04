@@ -294,7 +294,9 @@ export default {
   mounted () {
     console.log(this.user)
     this.loading = true
-    this.selectHomeData()
+    if (this.user.roleId.toString() === '75') {
+      this.selectHomeData()
+    }
     setTimeout(() => {
       this.loading = false
     }, 200)
@@ -339,6 +341,9 @@ export default {
           this.series2 = series
           this.chartOptions2.labels = chartOptions
           console.log(this.chartOptions2.labels)
+        }
+        if (this.newsList.length !== 0) {
+          this.newsContent = `《${this.newsList[0].title}》 ${this.newsList[0].content}`
         }
       })
     },

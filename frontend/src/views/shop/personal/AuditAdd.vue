@@ -1,5 +1,5 @@
 \<template>
-  <a-modal v-model="show" title="添加审核" @cancel="onClose" :width="600">
+  <a-modal v-model="show" title="添加审核申请" @cancel="onClose" :width="600">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -11,17 +11,17 @@
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='商品类型' v-bind="formItemLayout">
+          <a-form-item label='商铺标签' v-bind="formItemLayout">
             <a-input v-decorator="[
-            'typeName',
-            { rules: [{ required: true, message: '请输入名称!' }] }
+            'tag',
+            { rules: [{ required: true, message: '请输入商铺标签!' }] }
             ]"/>
           </a-form-item>
         </a-col>
         <a-col :span="24">
-          <a-form-item label='商品类型内容' v-bind="formItemLayout">
+          <a-form-item label='商铺简介' v-bind="formItemLayout">
             <a-textarea :rows="4" v-decorator="[
-            'remark',
+            'introduction',
              { rules: [{ required: true, message: '请输入内容!' }] }
             ]"/>
           </a-form-item>
@@ -70,7 +70,7 @@ const formItemLayout = {
 export default {
   name: 'BulletinAdd',
   props: {
-    bulletinAddVisiable: {
+    commodityAddVisiable: {
       default: false
     }
   },
@@ -80,7 +80,7 @@ export default {
     }),
     show: {
       get: function () {
-        return this.bulletinAddVisiable
+        return this.commodityAddVisiable
       },
       set: function () {
       }
@@ -126,9 +126,10 @@ export default {
       })
       this.form.validateFields((err, values) => {
         values.images = images.length > 0 ? images.join(',') : null
+        values.userId = this.currentUser.userId
         if (!err) {
           this.loading = true
-          this.$post('/cos/commodity-type', {
+          this.$post('/cos/audit-info/', {
             ...values
           }).then((r) => {
             this.reset()

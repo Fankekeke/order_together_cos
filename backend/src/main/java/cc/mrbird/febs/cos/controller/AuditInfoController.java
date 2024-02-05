@@ -56,15 +56,15 @@ public class AuditInfoController {
         // 添加商铺
         AuditInfo auditInfo = auditInfoService.getById(auditId);
         ShopInfo shopInfo = new ShopInfo();
-        shopInfo.setUserId(auditInfo.getUserId());
-        shopInfo.setCode("S-" + System.currentTimeMillis());
-        shopInfo.setIntroduction(auditInfo.getIntroduction());
-        shopInfo.setTag(auditInfo.getTag());
-        shopInfoService.save(shopInfo);
-        // 修改角色类型
-        userInfoService.update(Wrappers.<UserInfo>lambdaUpdate().set(UserInfo::getType, 2).eq(UserInfo::getId, auditInfo.getUserId()));
-        return R.ok(auditInfoService.update(Wrappers.<AuditInfo>lambdaUpdate().set(AuditInfo::getStatusDate, DateUtil.formatDateTime(new Date()))
-                .set(AuditInfo::getAuditStatus, type).eq(AuditInfo::getId, auditId)));
+        shopInfo.setId(auditInfo.getUserId());
+
+        if (type == 1) {
+            shopInfo.setStatus("1");
+        } else {
+            shopInfo.setStatus("0");
+        }
+        shopInfoService.updateById(shopInfo);
+        return R.ok(auditInfoService.updateById(auditInfo));
     }
 
     /**
@@ -76,6 +76,19 @@ public class AuditInfoController {
     @DeleteMapping("/{ids}")
     public R deleteByIds(@PathVariable("ids") List<Integer> ids) {
         return R.ok(auditInfoService.removeByIds(ids));
+    }
+
+    /**
+     * 添加审核信息
+     *
+     * @param auditInfo 审核信息
+     * @return 结果
+     */
+    @PostMapping
+    public R save(AuditInfo auditInfo) {
+        ShopInfo shopInfo = shopInfoService.getOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getSysUserId, auditInfo.getUserId()));
+        auditInfo.setUserId(shopInfo.getId());
+        return R.ok(auditInfoService.save(auditInfo));
     }
 
 }

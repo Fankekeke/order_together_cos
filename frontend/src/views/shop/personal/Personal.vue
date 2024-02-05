@@ -70,6 +70,9 @@
           <a-button key="submit" type="primary" :loading="loading" @click="handleSubmit">
             修改
           </a-button>
+          <a-button @click="add" style="margin-left: 15px">
+            审核
+          </a-button>
         </a-card>
       </div>
     </a-col>
@@ -88,12 +91,19 @@
         </a-card>
       </div>
     </a-col>
+    <auditAdd
+      v-if="commodityAdd.visiable"
+      @close="handlecommodityAddClose"
+      @success="handlecommodityAddSuccess"
+      :commodityAddVisiable="commodityAdd.visiable">
+    </auditAdd>
   </a-row>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import moment from 'moment'
+import AuditAdd from './AuditAdd.vue'
 moment.locale('zh-cn')
 const formItemLayout = {
   labelCol: { span: 24 },
@@ -114,8 +124,12 @@ export default {
       currentUser: state => state.account.user
     })
   },
+  components: {AuditAdd},
   data () {
     return {
+      commodityAdd: {
+        visiable: false
+      },
       rowId: null,
       formItemLayout,
       form: this.$form.createForm(this),
@@ -134,8 +148,19 @@ export default {
   },
   methods: {
     moment,
+    add () {
+      this.commodityAdd.visiable = true
+    },
+    handlecommodityAddClose () {
+      this.commodityAdd.visiable = false
+    },
     handleCancel () {
       this.previewVisible = false
+    },
+    handlecommodityAddSuccess () {
+      this.commodityAdd.visiable = false
+      this.$message.success('新增审核成功')
+      this.search()
     },
     async handlePreview (file) {
       if (!file.url && !file.preview) {

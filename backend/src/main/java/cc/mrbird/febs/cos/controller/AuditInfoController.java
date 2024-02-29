@@ -88,6 +88,8 @@ public class AuditInfoController {
     public R save(AuditInfo auditInfo) {
         ShopInfo shopInfo = shopInfoService.getOne(Wrappers.<ShopInfo>lambdaQuery().eq(ShopInfo::getSysUserId, auditInfo.getUserId()));
         auditInfo.setUserId(shopInfo.getId());
+        auditInfo.setCreateDate(DateUtil.formatDateTime(new Date()));
+        auditInfo.setAuditStatus(0);
         return R.ok(auditInfoService.save(auditInfo));
     }
 

@@ -1,11 +1,14 @@
 <template>
   <a-modal v-model="show" title="商铺审核" @cancel="onClose" :width="800">
     <template slot="footer">
-      <a-button key="back" @click="check(2)" type="danger">
-        驳回
-      </a-button>
-      <a-button key="check" @click="check(1)">
-        通过
+<!--      <a-button key="back" @click="check(2)" type="danger">-->
+<!--        驳回-->
+<!--      </a-button>-->
+<!--      <a-button key="check" @click="check(1)">-->
+<!--        通过-->
+<!--      </a-button>-->
+      <a-button key="check" @click="onClose">
+        返回
       </a-button>
     </template>
     <div style="font-size: 13px" v-if="auditData !== null">

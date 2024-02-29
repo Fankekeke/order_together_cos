@@ -8,10 +8,9 @@
     <block wx:else>
         <view class="cu-avatar round lg" style="background-image:url({{userInfo.avatar}});"></view>
         <view class='text-xl' style="margin-top: 15px;font-size: 15px">{{userInfo.userName}}</view>
-        <view class='margin-top-sm'>
+        <!-- <view class='margin-top-sm'>
             <text style="font-size: 13px" wx:if="{{userInfo.type == 1}}">普通会员</text>
-            <text style="font-size: 13px" wx:if="{{userInfo.type == 2}}">设计者</text>
-        </view>
+        </view> -->
     </block>
 </view>
 <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
@@ -39,16 +38,10 @@
             <text class='text-grey'>地址管理</text>
         </navigator>
     </view>
-    <view class="cu-item arrow" wx:if="{{userInfo.type != 2}}">
-        <navigator class='content' open-type="navigate" hover-class='none' url="/pages/user/audit/index">
-            <text class='icon-vipcard text-green'></text>
-            <text class='text-grey'>申请设计师</text>
-        </navigator>
-    </view>
-    <view class="cu-item arrow" wx:if="{{userInfo.type == 2}}">
+    <!-- <view class="cu-item arrow" wx:if="{{userInfo.type == 2}}">
         <navigator class='content' open-type="navigate" hover-class='none' url="/pages/user/goods/index">
             <text class='icon-vipcard text-green'></text>
             <text class='text-grey'>我的商品</text>
         </navigator>
-    </view>
+    </view> -->
 </view>

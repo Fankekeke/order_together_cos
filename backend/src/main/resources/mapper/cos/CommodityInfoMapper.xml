@@ -150,6 +150,7 @@
         WHERE
             1 = 1
           AND si.id = #{ shopId }
+        GROUP BY si.id
     </select>
 
     <!-- 店铺商品排序方式 -->

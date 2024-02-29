@@ -28,13 +28,13 @@ Page({
 			id: 1,
 			icon: 'questionfill',
 			color: 'red',
-			name: '博物馆',
+			name: '公告',
 			type: 1
 		}, {
 			id: 2,
 			icon: 'group_fill',
 			color: 'orange',
-			name: '设计',
+			name: '商家',
 			type: 2
 		}, {
 			id: 3,
@@ -46,7 +46,7 @@ Page({
 			id: 4,
 			icon: 'discoverfill',
 			color: 'olive',
-			name: '汉服',
+			name: '商品',
 			type: 4
 		}],
 		Headlines: [{
@@ -188,7 +188,7 @@ Page({
 		}
 		if (item.itemtype === 4) {
 			wx.navigateTo({
-				url: '/pages/home/search/index?key=汉服'
+				url: '/pages/home/search/index?key=生鲜'
 			});
 		}
 	},

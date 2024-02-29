@@ -18,6 +18,7 @@
         FROM
         audit_info ai
         LEFT JOIN user_info ui ON ( ui.id = ai.user_id )
+        LEFT JOIN shop_info si ON (si.user_id = ui.id)
         WHERE
         1 = 1
         <if test="auditInfo.auditStatus != null and auditInfo.auditStatus != ''">
@@ -27,7 +28,7 @@
             AND ui.user_name LIKE CONCAT('%',#{auditInfo.userName},'%')
         </if>
         <if test="auditInfo.userId != null">
-            AND ai.user_id = #{auditInfo.userId}
+            AND si.sys_user_id = #{auditInfo.userId}
         </if>
         ORDER BY
         ai.create_date DESC

@@ -11,7 +11,7 @@ Page({
     fileList: [],
     price: 0,
     bottom: false,
-    column1: ['上衣', '下装', '首饰', '鞋子', '内衣', '化妆品'],
+    column1: ['食品', '饮品', '药品'],
     vaa: "",
     radio: '1',
   },
@@ -93,23 +93,14 @@ Page({
           });
           let type = 0
           switch (this.data.vaa) {
-            case '上衣':
+            case '食品':
               type = 1
               break;
-            case '下装':
+            case '饮品':
               type = 2
               break;
-            case '首饰':
+            case '药品':
               type = 3
-              break;
-            case '鞋子':
-              type = 4
-              break;
-            case '内衣':
-              type = 5
-              break;
-            case '化妆品':
-              type = 6
               break;
 
             default:

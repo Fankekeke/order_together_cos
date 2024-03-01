@@ -1,25 +1,23 @@
 <template>
   <div>
-    <a-row v-if="user.roleId == 75" style="width: 100%;margin-top: 30px;margin-bottom: 50px">
-      <br/>
-      <a-col :span="24" style="padding-left: 30px">
-        <div style="font-size: 20px;font-family: SimHei;margin-top: 50px">我的消息</div>
-        <a-list item-layout="horizontal" :data-source="messageList">
-          <a-list-item slot="renderItem" slot-scope="item, index">
-            <a-list-item-meta
-              :description="item.content"
-            >
-              <a slot="title" href="https://www.antdv.com/">{{ item.title }}</a>
-              <a-avatar
-                slot="avatar"
-                :src="'http://127.0.0.1:9527/imagesWeb/' + student.images"
-              />
-            </a-list-item-meta>
-          </a-list-item>
-        </a-list>
-      </a-col>
-      <br/>
-    </a-row>
+<!--    <a-row v-if="user.roleId == 75" style="width: 100%;margin-top: 30px;margin-bottom: 50px">-->
+<!--      <a-col :span="24" style="padding-left: 30px">-->
+<!--        <div style="font-size: 20px;font-family: SimHei;margin-top: 50px">我的消息</div>-->
+<!--        <a-list item-layout="horizontal" :data-source="messageList">-->
+<!--          <a-list-item slot="renderItem" slot-scope="item, index">-->
+<!--            <a-list-item-meta-->
+<!--              :description="item.content"-->
+<!--            >-->
+<!--              <a slot="title" href="https://www.antdv.com/">{{ item.title }}</a>-->
+<!--              <a-avatar-->
+<!--                slot="avatar"-->
+<!--                :src="'http://127.0.0.1:9527/imagesWeb/' + student.images"-->
+<!--              />-->
+<!--            </a-list-item-meta>-->
+<!--          </a-list-item>-->
+<!--        </a-list>-->
+<!--      </a-col>-->
+<!--    </a-row>-->
     <a-row style="margin-top: 15px">
       <a-col :span="24">
         <div style="background: #ECECEC; padding: 30px;" v-if="user.roleId == 75">

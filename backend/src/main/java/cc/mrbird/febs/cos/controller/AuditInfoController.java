@@ -57,7 +57,7 @@ public class AuditInfoController {
         AuditInfo auditInfo = auditInfoService.getById(auditId);
         ShopInfo shopInfo = new ShopInfo();
         shopInfo.setId(auditInfo.getUserId());
-
+        auditInfo.setAuditStatus(type);
         if (type == 1) {
             shopInfo.setStatus("1");
         } else {

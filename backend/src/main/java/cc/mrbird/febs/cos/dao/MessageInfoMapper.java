@@ -38,5 +38,23 @@ public interface MessageInfoMapper extends BaseMapper<MessageInfo> {
      * @param sendUser 接收人
      * @return 结果
      */
-    List<LinkedHashMap<String, Object>> getMessageDetail(@Param("takeUser") Integer takeUser, @Param("sendUser") Integer sendUser);
+    List<LinkedHashMap<String, Object>> getMessageDetail(@Param("takeUser") Integer takeUser, @Param("sendUser") Integer sendUser);\
+
+    /**
+     * 根据用户编号获取联系人
+     *
+     * @param userCode 用户编号
+     * @param flag
+     * @return 结果
+     */
+    List<LinkedHashMap<String, Object>> selectContactPerson(@Param("userCode") String userCode, @Param("flag") Integer flag);
+
+    /**
+     * 查询聊天记录
+     *
+     * @param expertCode
+     * @param enterpriseCode
+     * @return 结果
+     */
+    List<LinkedHashMap<String, Object>> selectChatList(@Param("expertCode") String expertCode, @Param("enterpriseCode") String enterpriseCode);
 }

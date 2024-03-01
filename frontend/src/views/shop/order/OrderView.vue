@@ -18,6 +18,7 @@
           <span v-if="orderData.orderStatus == 0">正在拼单</span>
           <span v-if="orderData.orderStatus == 1">已完成</span>
           <span v-if="orderData.orderStatus == 2">拼单失败</span>
+          <span v-if="orderData.orderStatus == 3">已收货</span>
         </a-col>
       </a-row>
       <br/>
@@ -46,12 +47,12 @@
       <br/>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">
-        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">拼单信息</span>
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">用户信息</span>
         </a-col>
         <a-col :span="24" v-if="detailTemp.length !== 0">
           <a-list item-layout="horizontal" :data-source="detailTemp">
             <a-list-item slot="renderItem" slot-scope="item, index">
-              <a-list-item-meta :description="'拼单时间：' + item.createDate">
+              <a-list-item-meta :description="'创建时间：' + item.createDate">
                 <a slot="title">{{ item.userName }}</a>
                 <a-avatar
                   slot="avatar"

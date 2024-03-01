@@ -95,6 +95,9 @@ public class OrderInfo implements Serializable {
     private String commodityName;
 
     @TableField(exist = false)
+    private BigDecimal price;
+
+    @TableField(exist = false)
     private String userName;
 
     @TableField(exist = false)

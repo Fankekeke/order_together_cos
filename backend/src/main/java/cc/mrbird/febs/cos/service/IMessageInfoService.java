@@ -39,4 +39,22 @@ public interface IMessageInfoService extends IService<MessageInfo> {
      * @return 结果
      */
     List<LinkedHashMap<String, Object>> getMessageDetail(Integer takeUser, Integer sendUser);
+
+    /**
+     * 根据用户编号获取联系人
+     *
+     * @param userCode 用户编号
+     * @param flag
+     * @return 结果
+     */
+    List<LinkedHashMap<String, Object>> selectContactPerson(String userCode, Integer flag);
+
+    /**
+     * 查询聊天记录
+     *
+     * @param expertCode
+     * @param enterpriseCode
+     * @return 结果
+     */
+    List<LinkedHashMap<String, Object>> selectChatList(String expertCode, String enterpriseCode);
 }

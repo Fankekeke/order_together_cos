@@ -51,4 +51,28 @@ public class MessageInfoServiceImpl extends ServiceImpl<MessageInfoMapper, Messa
     public List<LinkedHashMap<String, Object>> getMessageDetail(Integer takeUser, Integer sendUser) {
         return baseMapper.getMessageDetail(takeUser, sendUser);
     }
+
+    /**
+     * 根据用户编号获取联系人
+     *
+     * @param userCode 用户编号
+     * @param flag
+     * @return 结果
+     */
+    @Override
+    public List<LinkedHashMap<String, Object>> selectContactPerson(String userCode, Integer flag) {
+        return baseMapper.selectContactPerson(userCode, flag);
+    }
+
+    /**
+     * 查询聊天记录
+     *
+     * @param expertCode
+     * @param enterpriseCode
+     * @return 结果
+     */
+    @Override
+    public List<LinkedHashMap<String, Object>> selectChatList(String expertCode, String enterpriseCode) {
+        return baseMapper.selectChatList(expertCode, enterpriseCode);
+    }
 }

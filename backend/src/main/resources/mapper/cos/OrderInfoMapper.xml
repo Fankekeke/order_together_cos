@@ -236,7 +236,7 @@
         LEFT JOIN shop_info si ON ( si.id = ci.shop_id )
         LEFT JOIN user_info ui ON ( ui.id = si.user_id )
         WHERE
-        oi.order_status = 1
+        oi.order_status = 0
         AND oi.user_id = #{ userId }
     </select>
 
@@ -285,7 +285,7 @@
         ci.`name`,
         ci.images,
         ci.content,
-        oi.order_price,
+        oi.order_price AS price,
         ci.on_put,
         ci.type,
         si.id AS shopId,
@@ -301,7 +301,7 @@
         LEFT JOIN evaluation eva ON (eva.order_id = oi.id)
         WHERE
         1 = 1
-        AND oi.order_status != 1
+        AND (oi.order_status = 1 or oi.order_status = 3)
         AND oi.user_id = #{ userId }
     </select>
 
@@ -333,7 +333,7 @@
         LEFT JOIN evaluation eva ON ( eva.order_id = oi.id )
         WHERE
         1 = 1
-        AND oi.order_status != 1
+        AND oi.order_status = 1 or oi.order_status = 3
         AND ui.id = #{ userId }
     </select>
 
@@ -393,7 +393,7 @@
         DATE_SUB( curdate(), INTERVAL + 9 DAY )) spo
         LEFT JOIN order_info oi ON (
         DATE_FORMAT( oi.create_date, '%Y-%m-%d' ) = DATE_FORMAT( spo.days, '%Y-%m-%d' )
-        AND oi.order_status = 1
+        AND (oi.order_status = 1 or oi.order_status = 3)
         <if test="shopId != null">
             AND oi.shop_id = #{shopId}
         </if>
@@ -433,7 +433,7 @@
         DATE_SUB( curdate(), INTERVAL + 9 DAY )) spo
         LEFT JOIN order_info oi ON (
         DATE_FORMAT( oi.create_date, '%Y-%m-%d' ) = DATE_FORMAT( spo.days, '%Y-%m-%d' )
-        AND oi.order_status = 1
+        AND (oi.order_status = 1 or oi.order_status = 3)
         <if test="shopId != null">
             AND oi.shop_id = #{shopId}
         </if>
@@ -451,7 +451,7 @@
         from
         order_info oi
         where
-        oi.order_status = 1
+        (oi.order_status = 1 or oi.order_status = 3)
         <if test="shopId != null">
             AND oi.shop_id = #{shopId}
         </if>
@@ -467,7 +467,7 @@
         from
         order_info oi
         where
-        oi.order_status = 1
+        (oi.order_status = 1 or oi.order_status = 3)
         <if test="shopId != null">
             AND oi.shop_id = #{shopId}
         </if>

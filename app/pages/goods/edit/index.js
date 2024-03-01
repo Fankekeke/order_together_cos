@@ -11,7 +11,7 @@ Page({
     fileList: [],
     price: 0,
     bottom: false,
-    column1: ['上衣', '下装', '首饰', '鞋子', '内衣', '化妆品'],
+    column1: ['食品', '饮品', '药品'],
     vaa: "",
     radio: '1',
     goodsInfo: null
@@ -24,22 +24,13 @@ Page({
       let type = ''
       switch (r.data.type) {
         case 1:
-          type = '上衣'
+          type = '食品'
           break;
         case 2:
-          type = '下装'
+          type = '饮品'
           break;
         case 3:
-          type = '首饰'
-          break;
-        case 4:
-          type = '鞋子'
-          break;
-        case 5:
-          type = '内衣'
-          break;
-        case 6:
-          type = '化妆品'
+          type = '药品'
           break;
 
         default:
@@ -135,23 +126,14 @@ Page({
           });
           let type = 0
           switch (this.data.vaa) {
-            case '上衣':
+            case '食品':
               type = 1
               break;
-            case '下装':
+            case '饮品':
               type = 2
               break;
-            case '首饰':
+            case '药品':
               type = 3
-              break;
-            case '鞋子':
-              type = 4
-              break;
-            case '内衣':
-              type = 5
-              break;
-            case '化妆品':
-              type = 6
               break;
 
             default:

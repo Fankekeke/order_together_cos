@@ -51,6 +51,8 @@ public class WebController {
 
     private final IEvaluationService evaluationService;
 
+    private final IOrderDetailService orderDetailService;
+
     @PostMapping("/userAdd")
     public R userAdd(@RequestBody UserInfo user) throws Exception {
         String url = "https://api.weixin.qq.com/sns/jscode2session";
@@ -421,13 +423,24 @@ public class WebController {
     public R addGoodsCart(@RequestBody OrderInfo orderInfo) {
         orderInfo.setCode("ORD-" + System.currentTimeMillis());
         orderInfo.setCreateDate(DateUtil.formatDateTime(new Date()));
-        orderInfo.setOrderStatus(1);
+        orderInfo.setOrderStatus(0);
+        orderInfo.setOrderPrice(orderInfo.getPrice());
         // 查询用户默认地址
         AddressInfo addressInfo = addressInfoService.getOne(Wrappers.<AddressInfo>lambdaQuery().eq(AddressInfo::getUserId, orderInfo.getUserId())
                 .eq(AddressInfo::getDefaultAddress, 1));
         if (addressInfo != null) {
             orderInfo.setAddressId(addressInfo.getId());
         }
+
+        // 添加订单详情
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setCode(orderInfo.getCode());
+        orderDetail.setUserId(orderInfo.getUserId());
+        orderDetail.setOrderStatus("0");
+        orderDetail.setCreateDate(DateUtil.formatDateTime(new Date()));
+        orderDetail.setAddressId(orderInfo.getAddressId());
+        orderDetailService.save(orderDetail);
+
         return R.ok(orderInfoService.save(orderInfo));
     }
 
@@ -460,7 +473,9 @@ public class WebController {
      */
     @GetMapping("/goodsCartComplete")
     public R goodsCartComplete(@RequestParam List<String> ids) {
-        return R.ok(orderInfoService.update(Wrappers.<OrderInfo>lambdaUpdate().set(OrderInfo::getOrderStatus, 2).in(OrderInfo::getId, ids)));
+        return R.ok(orderInfoService.update(Wrappers.<OrderInfo>lambdaUpdate().set(OrderInfo::getPayDate, DateUtil.formatDateTime(new Date()))
+                        .set(OrderInfo::getUserNum, 1)
+                .set(OrderInfo::getOrderStatus, 1).in(OrderInfo::getId, ids)));
     }
 
     /**
@@ -562,6 +577,9 @@ public class WebController {
      */
     @PostMapping("/evaluationAdd")
     public R evaluationAdd(@RequestBody Evaluation evaluation) {
+        OrderInfo orderInfo = orderInfoService.getById(evaluation.getOrderId());
+        List<OrderDetail> orderDetailList = orderDetailService.list(Wrappers.<OrderDetail>lambdaQuery().eq(OrderDetail::getCode, orderInfo.getCode()));
+        evaluation.setOrderId(orderDetailList.get(0).getId());
         evaluation.setCreateDate(DateUtil.formatDateTime(new Date()));
         return R.ok(evaluationService.save(evaluation));
     }

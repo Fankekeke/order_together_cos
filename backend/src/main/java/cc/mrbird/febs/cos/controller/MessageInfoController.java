@@ -44,4 +44,15 @@ public class MessageInfoController {
         return R.ok(messageInfoService.removeByIds(ids));
     }
 
+    /**
+     * 根据用户编号获取联系人
+     *
+     * @param userCode 用户编号
+     * @return 结果
+     */
+    @GetMapping("/contact/person")
+    public R selectContactPerson(@RequestParam("userCode") String userCode, @RequestParam("flag") Integer flag) {
+        return R.ok(messageInfoService.selectContactPerson(userCode, flag));
+    }
+
 }

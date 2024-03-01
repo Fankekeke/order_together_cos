@@ -21,8 +21,8 @@ Page({
             key: 'userInfo',
             success: (res) => {
                 if (res.data.type == 2) {
-                    this.setData({ SortMenu: [{ id: 0, name: "全部订单" }, { id: 1, name: "待收货" }, { id: 2, name: "已完成" }, { id: 3, name: "卖出商品" }]})
-                    this.getOrderByUserId(res.data.id)
+                    this.setData({ SortMenu: [{ id: 0, name: "全部订单" }, { id: 1, name: "待收货" }, { id: 2, name: "已完成" }]})
+                    //this.getOrderByUserId(res.data.id)
                 }
                 this.setData({ userInfo: res.data })
                 this.getOrderListByUserId(res.data.id)
@@ -173,7 +173,7 @@ Page({
         if (e.currentTarget.dataset.id == 1) {
             let orderList = []
             this.data.orderListCopy.forEach(item => {
-                if (item.orderStatus == 2) {
+                if (item.orderStatus == 1) {
                     orderList.push(item)
                 }
             });

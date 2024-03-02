@@ -14,7 +14,7 @@
             <view class="cu-item shadow margin-top">
                 <view class="cu-list menu menu-avatar">
                     <view class="cu-item">
-                        <view class="cu-avatar radius lg" style="background-image:url({{ item.avatar }});"></view>
+                        <view class="cu-avatar radius lg" style="background-image:url(http://127.0.0.1:9527/imagesWeb/{{ item.avatar }});"></view>
                         <view class='content'>
                             <view class='text-black canui-xzwz' style="font-size: 13px">{{ item.userName }}的小店</view>
                             <view class='text-gray text-sm canui-xzwz'> {{ item.introduction }}</view>

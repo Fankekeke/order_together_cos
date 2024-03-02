@@ -30,6 +30,7 @@
         <if test="shopInfo.introduction != null and shopInfo.introduction != ''">
             AND si.introduction LIKE CONCAT('%',#{shopInfo.introduction},'%')
         </if>
+        group by si.id
     </select>
 
     <!-- 商家信息 -->

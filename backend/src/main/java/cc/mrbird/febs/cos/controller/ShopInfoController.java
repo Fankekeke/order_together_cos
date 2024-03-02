@@ -4,7 +4,10 @@ package cc.mrbird.febs.cos.controller;
 import cc.mrbird.febs.common.utils.R;
 import cc.mrbird.febs.cos.entity.BulletinInfo;
 import cc.mrbird.febs.cos.entity.ShopInfo;
+import cc.mrbird.febs.cos.entity.UserInfo;
 import cc.mrbird.febs.cos.service.IShopInfoService;
+import cc.mrbird.febs.cos.service.IUserInfoService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ import java.util.List;
 public class ShopInfoController {
 
     private final IShopInfoService shopInfoService;
+
+    private final IUserInfoService userInfoService;
 
     /**
      * 分页查询商铺信息
@@ -53,6 +58,11 @@ public class ShopInfoController {
      */
     @PutMapping
     public R edit(ShopInfo shopInfo) {
+        ShopInfo shopInfoBack = shopInfoService.getById(shopInfo.getId());
+        UserInfo userInfo = userInfoService.getById(shopInfoBack.getUserId());
+        userInfo.setUserName(shopInfo.getName());
+        userInfo.setAvatar(shopInfo.getImages());
+        userInfoService.updateById(userInfo);
         return R.ok(shopInfoService.updateById(shopInfo));
     }
 

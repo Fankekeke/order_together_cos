@@ -230,6 +230,7 @@
         <if test="key != null and key != ''">
             AND ui.user_name LIKE CONCAT('%',#{key},'%')
         </if>
+        GROUP BY si.id
     </select>
 
     <!-- 根据用户获取商品信息 -->

@@ -91,6 +91,14 @@ export default {
         sendUser: item.sendUser,
         userId: this.user.userId
       }).then((r) => {
+        r.data.data.forEach(item => {
+          if (item.sendUserAvatar && !item.sendUserAvatar.includes('http')) {
+            item.sendUserAvatar = 'http://127.0.0.1:9527/imagesWeb/' + item.sendUserAvatar
+          }
+          if (item.takeUserAvatar && !item.takeUserAvatar.includes('http')) {
+            item.takeUserAvatar = 'http://127.0.0.1:9527/imagesWeb/' + item.takeUserAvatar
+          }
+        })
         this.chatList = r.data.data
         console.log(this.chatList)
       })

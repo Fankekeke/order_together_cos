@@ -255,6 +255,14 @@ export default {
         let data = r.data.data
         const pagination = {...this.pagination}
         pagination.total = data.total
+        data.records.forEach(item => {
+          if (item.sendUserAvatar && !item.sendUserAvatar.includes('http')) {
+            item.sendUserAvatar = 'http://127.0.0.1:9527/imagesWeb/' + item.sendUserAvatar
+          }
+          if (item.takeUserAvatar && !item.takeUserAvatar.includes('http')) {
+            item.takeUserAvatar = 'http://127.0.0.1:9527/imagesWeb/' + item.takeUserAvatar
+          }
+        })
         this.dataSource = data.records
         this.pagination = pagination
         // 数据加载完毕，关闭loading

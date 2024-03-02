@@ -79,7 +79,7 @@
                             </view>
                         </view>
                     </view>
-                    <view class="cu-avatar radius" style="background-image:url({{item.avatar}});"></view>
+                    <view class="cu-avatar radius" style="background-image:url(http://127.0.0.1:9527/imagesWeb/{{item.avatar}});"></view>
                 </view>
             </view>
         </navigator>
@@ -120,7 +120,7 @@
 </view>
 <view class="cu-list menu menu-avatar">
     <view class="cu-item " wx:for="{{shopInfo}}">
-        <view class="cu-avatar radius lg" style="background-image:url({{ item.avatar }});"></view>
+        <view class="cu-avatar radius lg" style="background-image:url(http://127.0.0.1:9527/imagesWeb/{{ item.avatar }});"></view>
         <view class='content'>
             <view class="text-titile">{{ item.userName }}</view>
             <view class='text-gray text-sm'>{{ item.introduction }}</view>

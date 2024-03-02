@@ -40,7 +40,7 @@
     </view>
     <view class="cu-list menu menu-avatar" wx:if="{{ TabCur == 1 }}">
         <view class="cu-item " wx:for="{{ shop }}">
-            <view class="cu-avatar radius lg" style="background-image:url({{ item.avatar }});"></view>
+            <view class="cu-avatar radius lg" style="background-image:url(http://127.0.0.1:9527/imagesWeb/{{ item.avatar }});"></view>
             <view class='content' style="padding-left: 15px">
                 <view class="canui-xzwz">{{ item.userName }}的小店</view>
                 <view class='text-red text-sm'>{{ item.tag }}</view>

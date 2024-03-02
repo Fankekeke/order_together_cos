@@ -38,7 +38,7 @@ public interface MessageInfoMapper extends BaseMapper<MessageInfo> {
      * @param sendUser 接收人
      * @return 结果
      */
-    List<LinkedHashMap<String, Object>> getMessageDetail(@Param("takeUser") Integer takeUser, @Param("sendUser") Integer sendUser);\
+    List<LinkedHashMap<String, Object>> getMessageDetail(@Param("takeUser") Integer takeUser, @Param("sendUser") Integer sendUser);
 
     /**
      * 根据用户编号获取联系人

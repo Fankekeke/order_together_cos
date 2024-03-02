@@ -6,12 +6,11 @@
           <a-avatar
             :size="46"
             icon="user"
-            :src="'http://127.0.0.1:9527/imagesWeb/' + item.images"
+            :src="item.takeUserAvatar"
           />
-          <span style="margin-left: 35px;font-size: 15px">
-            {{ item.name }}
+          <span style="margin-left: 35px;font-size: 13px">
+            {{ item.takeUserName }}
           </span>
-          <span style="font-size: 13px">【{{ item.position }}】</span>
         </a-menu-item>
       </a-menu>
       <div style="text-align: center;margin-top: 50px" v-else>
@@ -28,7 +27,7 @@
             :data-source="chatList"
           >
             <a-list-item slot="renderItem" slot-scope="item, index">
-              <a-comment :author="item.type == 1 ? item.expertName : item.enterpriseName" :avatar="'http://127.0.0.1:9527/imagesWeb/' + (item.type == 1 ? item.expertImages : item.enterpriseImages)">
+              <a-comment :author="item.sendUserName" :avatar="item.sendUserAvatar">
                 <p slot="content">
                   {{ item.content }}
                 </p>
@@ -79,18 +78,18 @@ export default {
   },
   methods: {
     selectContactPerson () {
-      this.$get(`/cos/chat-info/contact/person`, {
-        userCode: this.user.userCode,
-        flag: 2
+      this.$get(`/cos/message-info/messageListById`, {
+        userId: this.user.userId
       }).then((r) => {
         this.contactList = r.data.data
       })
     },
     onChange (item) {
       this.currentItem = item
-      this.$get(`/cos/chat-info/record`, {
-        expertCode: item.expertCode,
-        enterpriseCode: item.enterpriseCode
+      this.$get(`/cos/message-info/getMessageDetail`, {
+        takeUser: item.takeUser,
+        sendUser: item.sendUser,
+        userId: this.user.userId
       }).then((r) => {
         this.chatList = r.data.data
         console.log(this.chatList)
@@ -101,10 +100,9 @@ export default {
         this.$message.error('请输入消息')
         return false
       }
-      this.$post(`/cos/chat-info`, {
-        expertCode: this.currentItem.expertCode,
-        enterpriseCode: this.currentItem.enterpriseCode,
-        type: 2,
+      this.$post(`/cos/message-info/messageReply`, {
+        takeUser: this.currentItem.sendUser,
+        sendUser: this.currentItem.takeUser,
         content: this.contentValue
       }).then((r) => {
         this.contentValue = ''

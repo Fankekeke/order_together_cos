@@ -104,7 +104,7 @@
               </template>
               <a-list-item-meta :description="item.tag">
                 <a slot="title" :href="item.href">{{ item.userName }}的小店</a>
-                <a-avatar slot="avatar" :src="item.avatar" />
+                <a-avatar slot="avatar" :src="'http://127.0.0.1:9527/imagesWeb/' + item.avatar" />
               </a-list-item-meta>
               {{ item.introduction }}
             </a-list-item>
@@ -118,7 +118,7 @@
             <a-select-option v-for="(item, index) in shopList" :key="index" :value="item.id" :label="item.userName">
               <a-row>
                 <a-col :span="4">
-                  <a-avatar style="margin-right: 20px" shape="square" :size="40" icon="user" :src="item.avatar" />
+                  <a-avatar style="margin-right: 20px" shape="square" :size="40" icon="user" :src="'http://127.0.0.1:9527/imagesWeb/' + item.avatar" />
                 </a-col>
                 <a-col :span="20">
                   <a-row>

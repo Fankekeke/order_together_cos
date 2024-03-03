@@ -39,7 +39,7 @@
     </div>
     <div>
       <div class="operator">
-        <!--        <a-button type="primary" ghost @click="add">新增</a-button>-->
+        <a-button type="primary" ghost @click="add">新增</a-button>
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -77,6 +77,12 @@
         </template>
       </a-table>
     </div>
+    <bulletin-add
+      v-if="bulletinAdd.visiable"
+      @close="handleBulletinAddClose"
+      @success="handleBulletinAddSuccess"
+      :bulletinAddVisiable="bulletinAdd.visiable">
+    </bulletin-add>
   </a-card>
 </template>
 
@@ -84,11 +90,12 @@
 import RangeDate from '@/components/datetime/RangeDate'
 import {mapState} from 'vuex'
 import moment from 'moment'
+import BulletinAdd from './ShopAdd.vue'
 moment.locale('zh-cn')
 
 export default {
   name: 'Shop',
-  components: {RangeDate},
+  components: {RangeDate, BulletinAdd},
   data () {
     return {
       advanced: false,
@@ -99,6 +106,9 @@ export default {
       dataSource: [],
       selectedRowKeys: [],
       loading: false,
+      bulletinAdd: {
+        visiable: false
+      },
       pagination: {
         pageSizeOptions: ['10', '20', '30', '40', '100'],
         defaultCurrent: 1,
@@ -118,6 +128,9 @@ export default {
       return [{
         title: '店铺所属',
         dataIndex: 'userName'
+      }, {
+        title: '店铺编号',
+        dataIndex: 'code'
       }, {
         title: '头像',
         dataIndex: 'avatar',
@@ -186,6 +199,17 @@ export default {
     this.fetch()
   },
   methods: {
+    add () {
+      this.bulletinAdd.visiable = true
+    },
+    handleBulletinAddClose () {
+      this.bulletinAdd.visiable = false
+    },
+    handleBulletinAddSuccess () {
+      this.bulletinAdd.visiable = false
+      this.$message.success('新增商铺成功')
+      this.search()
+    },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },

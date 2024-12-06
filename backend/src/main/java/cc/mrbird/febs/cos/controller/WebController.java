@@ -488,7 +488,7 @@ public class WebController {
     public R buyGoods(@RequestBody OrderInfo orderInfo) {
         orderInfo.setCode("ORD-" + System.currentTimeMillis());
         orderInfo.setCreateDate(DateUtil.formatDateTime(new Date()));
-        orderInfo.setOrderStatus(2);
+        orderInfo.setOrderStatus(1);
         return R.ok(orderInfoService.save(orderInfo));
     }
 

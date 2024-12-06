@@ -11,9 +11,9 @@
           <a-col :span="12" v-for="(item, index) in orderList" :key="index" style="margin-top: 15px">
             <a-card hoverable>
               <a-card-meta :title="item.shopName + '的店铺'" :description="item.name">
-                <a-avatar
+                <a-avatars
                   slot="avatar"
-                  :src="item.shopAvatar"
+                  :src="'http://127.0.0.1:9527/imagesWeb/' + item.shopAvatar"
                 />
               </a-card-meta>
               <div style="margin-left: 45px;margin-top: 20px">

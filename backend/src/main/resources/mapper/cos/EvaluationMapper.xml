@@ -71,8 +71,10 @@
         FROM
         evaluation eva
         LEFT JOIN user_info ui ON ( ui.id = eva.user_id )
+        LEFT JOIN order_detail od ON (eva.order_id = od.id)
+        LEFT JOIN order_info oi ON (oi.code = od.code)
         WHERE
-        eva.order_id = #{ id }
+            oi.id = #{ id }
     </select>
 
     <!-- 根据商品ID获取评价 -->

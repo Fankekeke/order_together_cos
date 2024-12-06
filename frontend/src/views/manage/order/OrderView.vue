@@ -54,11 +54,6 @@
             <a-list-item slot="renderItem" slot-scope="item, index">
               <a-list-item-meta :description="'创建时间：' + item.createDate">
                 <a slot="title">{{ item.userName }}</a>
-                <a-avatar
-                  slot="avatar"
-                  shape="square"
-                  :src="item.avatar"
-                />
               </a-list-item-meta>
             </a-list-item>
           </a-list>
@@ -71,7 +66,7 @@
           <span style="font-size: 13px;color: #aaaaaa">
             <a-popover>
               <template slot="content">
-                <a-avatar shape="square" size={132} icon="user" :src="orderData.shopAvatar" />
+                <a-avatar shape="square" size={132} icon="user" :src="'http://127.0.0.1:9527/imagesWeb/' + orderData.shopAvatar" />
               </template>
               {{ orderData.shopName }}的小店
             </a-popover>

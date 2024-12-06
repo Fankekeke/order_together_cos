@@ -15,7 +15,7 @@
           {{ orderData.createDate }}
         </a-col>
         <a-col :span="8"><b>订单状态：</b>
-          <span v-if="orderData.orderStatus == 0">正在拼单</span>
+          <span v-if="orderData.orderStatus == 0">正在支付</span>
           <span v-if="orderData.orderStatus == 1">已完成</span>
           <span v-if="orderData.orderStatus == 2">拼单失败</span>
           <span v-if="orderData.orderStatus == 3">已收货</span>
@@ -54,11 +54,6 @@
             <a-list-item slot="renderItem" slot-scope="item, index">
               <a-list-item-meta :description="'创建时间：' + item.createDate">
                 <a slot="title">{{ item.userName }}</a>
-                <a-avatar
-                  slot="avatar"
-                  shape="square"
-                  :src="item.avatar"
-                />
               </a-list-item-meta>
             </a-list-item>
           </a-list>
@@ -71,7 +66,7 @@
           <span style="font-size: 13px;color: #aaaaaa">
             <a-popover>
               <template slot="content">
-                <a-avatar shape="square" size={132} icon="user" :src="orderData.shopAvatar" />
+                <a-avatar shape="square" size={132} icon="user" :src="'http://127.0.0.1:9527/imagesWeb/' + orderData.shopAvatar" />
               </template>
               {{ orderData.shopName }}的小店
             </a-popover>
@@ -122,12 +117,12 @@
             @preview="handlePreview"
             @change="picHandleChange"
           >
-<!--            <div v-if="fileList.length < 8">-->
-<!--              <a-icon type="plus" />-->
-<!--              <div class="ant-upload-text">-->
-<!--                Upload-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div v-if="fileList.length < 8">-->
+            <!--              <a-icon type="plus" />-->
+            <!--              <div class="ant-upload-text">-->
+            <!--                Upload-->
+            <!--              </div>-->
+            <!--            </div>-->
           </a-upload>
           <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
             <img alt="example" style="width: 100%" :src="previewImage" />

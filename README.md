@@ -1,17 +1,17 @@
-### 基于SpringBoot + Vue的微信小程序的商品购买系统.
+![](https://img.shields.io/badge/License-MIT-blue.svg)
 
-商品管理小程序、电商小程序系统、零售商品小程序、线上商城小程序。
+![](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)
 
-#### 商铺管理员功能模块介绍：
-> 商铺信息：编辑和维护店铺名称、简介、营业状态等基本信息。我的商品：管理本店上架的商品，包括新增、修改或下架操作。商铺订单：查看并处理本店所有用户下单及发货状态。订单评价：查看顾客对商品和服务的评分与文字反馈。消息回复：及时响应用户咨询或平台发送的站内消息。商铺审核：提交资质材料，配合平台完成店铺入驻审核流程。用户沟通：与顾客在线交流，解答疑问或处理售后问题。
+![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-#### 系统管理员功能模块介绍：
-> 收货地址管理：监管用户收货地址数据，保障配送信息合规。商铺审核管理：审核新入驻商铺资质，决定是否通过上线。公告信息：发布全平台通知，如活动、规则变更等重要消息。商品管理：监督所有商品内容，处理违规或侵权商品。用户评价：查看、筛选或处置用户对商品/商铺的评论内容。消息管理：统一管理平台与用户、商铺之间的通信记录。订单管理：监控全平台订单状态，协调异常订单处理。贴子管理：审核和管理论坛中用户发布的帖子与互动内容。商铺管理：维护所有商铺资料，支持冻结、推荐等操作。用户管理：管理用户账号，处理举报、封禁等安全事务。商品类型：配置和维护商品分类体系，如食品、服饰等类目。
+# 基于 SpringBoot + Vue 的校园商城小程序 (Campus Mall Mini Program)
 
-#### 用户功能模块介绍：
-> 商铺详情：浏览店铺介绍、主营商品、评分及联系方式。查看公告：阅读平台或商铺发布的最新通知与活动信息。搜索商品：通过关键词快速查找所需商品或相关店铺。系统论坛：参与社区讨论，分享购物经验或提问交流。发帖回复：在论坛中发表观点或回复他人帖子内容。用户订单：查看个人历史订单、物流状态及售后服务。加入购物车：将心仪商品暂存购物车，便于批量结算。收货地址管理：添加、编辑或删除常用收货地址信息。订单评价：对已完成的订单进行打分和文字评价。联系客服：通过在线方式向商铺或平台客服发起咨询。
+商铺管理 · 商品交易 · 在线订单 · 社区论坛 · 多角色协同 · 评价互动 · 消息通知
+
+本项目是一套面向高校场景的校园商城小程序系统，采用前后端分离架构，覆盖系统管理员、商铺管理员、普通用户三类角色。系统围绕“商铺入驻、商品管理、订单交易、购物车、收货地址、评价互动、社区论坛、消息通知”等核心业务设计，支持用户在线浏览商品、搜索下单、加入购物车、发帖互动与联系客服，商铺管理员独立管理自家店铺、商品、订单与用户沟通，系统管理员完成商铺审核、商品分类、用户管理、订单监管、论坛内容与公告发布，适用于高校校园电商、学生创业店铺、校园二手交易、社团商品销售及师生日常购物服务场景。
 
 #### 安装环境
+️**注意**：请确保您的开发环境已安装以下依赖。
 
 JAVA 环境 
 
@@ -19,34 +19,162 @@ Node.js环境 [https://nodejs.org/en/] 选择14.17
 
 Yarn 打开cmd， 输入npm install -g yarn !!!必须安装完毕nodejs
 
-Mysql 数据库 [https://blog.csdn.net/qq_40303031/article/details/88935262] 一定要把账户和密码记住
+Mysql 数据库 一定要把账户和密码记住
 
 redis
 
-Idea 编译器 [https://blog.csdn.net/weixin_44505194/article/details/104452880]
+Idea 编译器
 
-WebStorm OR VScode 编译器 [https://www.jianshu.com/p/d63b5bae9dff]
+WebStorm OR VScode 编译器
 
 #### 采用技术及功能
 
 后端：SpringBoot、MybatisPlus、MySQL、Redis、
 前端：Vue、Apex、Antd、Axios
-报表：Spread.js
 
-平台前端：vue(框架) + vuex(全局缓存) + rue-router(路由) + axios(请求插件) + apex(图表)  + antd-ui(ui组件)
+平台前端：vue(框架) + vuex(全局缓存) + rue-router(路由) + axios(请求插件) + apex(图表)  + antd-ui(ui组件) + 百度地图 API
 
 平台后台：springboot(框架) + redis(缓存中间件) + shiro(权限中间件) + mybatisplus(orm) + restful风格接口 + mysql(数据库)
 
 开发环境：windows10 or windows7 ， vscode or webstorm ， idea + lambok
 
-#### 商铺管理员
-商铺信息、我的商品、商铺订单、订单评价、消息回复、商铺审核、用户沟通
+---
 
-#### 系统管理员
-收货地址管理、商铺审核管理、公告信息、商品管理、用户评价、消息管理、订单管理、贴子管理、商铺管理、用户管理、商品类型
+## 核心特性
 
-#### 用户
-商铺详情、查看公告、搜索商品、系统论坛、发帖回复、用户订单、加入购物车、收货地址管理、订单评价、联系客服
+- **多角色权限管理**：区分系统管理员、商铺管理员、普通用户三类角色，实现不同权限隔离与功能访问控制。
+- **商铺入驻与审核机制**：支持商铺申请入驻，系统管理员对商铺资质进行审核，审核通过后方可上架商品与接单。
+- **商品全生命周期管理**：支持商品发布、编辑、上下架、分类管理、搜索展示与库存维护。
+- **购物车与订单流程**：用户可将商品加入购物车，支持批量下单、订单状态跟踪（待付款、待发货、待收货、已完成）。
+- **收货地址管理**：用户可维护多个收货地址，支持设置默认地址，下单时灵活选择。
+- **订单评价与互动**：用户完成订单后可对商品与服务进行评价，商铺管理员可查看并回复评价。
+- **社区论坛功能**：内置校园论坛模块，支持用户发帖、回帖、浏览帖子，营造校园交流氛围。
+- **消息通知服务**：支持系统公告、订单状态变更、评价回复、客服沟通等多端消息推送。
+- **商铺独立管理后台**：商铺管理员拥有独立管理界面，可管理自家商品、订单、评价与用户沟通，无需依赖系统管理员。
+- **在线客服沟通**：用户可通过内置客服功能与商铺管理员或系统管理员进行即时沟通。
+---
+
+## 适用场景
+
+- 高校校园电商平台运营
+- 学生创业店铺在线经营
+- 校园二手物品交易
+- 社团活动商品销售
+- 校园周边商铺线上化
+- 师生日常购物与服务
+- 校园社区交流与互动
+---
+
+## 功能模块概览
+
+## 系统管理员端
+
+系统管理员负责平台整体运营、商铺审核、商品分类、用户管理、订单监管与论坛内容维护：
+
+### 商铺与商品管理
+
+- **商铺管理**：查看平台所有商铺信息，包括商铺名称、负责人、联系方式、经营状态与入驻时间。
+- **商铺审核管理**：对新申请入驻的商铺进行资质审核，支持通过或驳回操作，并填写审核意见。
+- **商品管理**：查看平台所有商品列表，支持按商铺、分类、状态筛选，可对违规商品进行下架处理。
+- **商品类型管理**：维护商品分类体系，支持多级分类的增删改查，便于商品归类与用户检索。
+
+### 订单与评价管理
+
+- **订单管理**：查看平台所有订单，包括订单编号、用户、商铺、商品、金额、状态与创建时间，支持按条件筛选与导出。
+- **用户评价管理**：查看用户对商品与商铺的评价内容，支持对恶意评价进行处理与屏蔽。
+
+### 用户与内容管理
+
+- **用户管理**：管理注册用户信息，包括账号状态、实名认证、联系方式，支持禁用异常账号。
+- **贴子管理**：管理社区论坛中的帖子内容，支持对违规帖子进行删除或隐藏，维护社区秩序。
+- **公告信息管理**：发布平台公告，包括活动通知、规则调整、维护通知与安全提示，支持置顶与定时发布。
+
+### 消息与地址管理
+
+- **消息管理**：查看与推送系统级消息，包括订单通知、审核结果、违规提醒与活动推送。
+- **收货地址管理**：查看用户维护的收货地址列表，支持对异常地址进行清理与管理。
+
+---
+
+## 商铺管理员端
+
+商铺管理员负责自家店铺的独立运营，包括商品维护、订单处理、评价回复与用户沟通：
+
+### 店铺与商品管理
+
+- **商铺信息**：维护自家商铺基本信息，包括店铺名称、Logo、简介、联系方式与营业状态。
+- **我的商品**：发布、编辑、上下架自家商品，管理商品图片、价格、库存、描述与所属分类。
+
+### 订单与评价管理
+
+- **商铺订单**：查看自家店铺的所有订单，支持按状态筛选，进行发货、确认收货等操作。
+- **订单评价**：查看用户对自家商品与服务的評價，支持回复评价，提升用户满意度。
+
+### 沟通与审核
+
+- **消息回复**：查看用户通过客服发送的消息，支持在线回复，实现即时沟通。
+- **用户沟通**：与下单用户或咨询用户进行一对一沟通，解答疑问、处理售后问题。
+- **商铺审核**：查看自家商铺的审核状态与审核意见，若被驳回可根据意见修改后重新提交。
+
+---
+
+## 用户端
+
+用户端面向在校学生与教师，提供商品浏览、搜索下单、购物车、评价互动与社区交流功能：
+
+### 账户与个人信息
+
+- **账户注册登录**：支持手机号或学号/工号注册登录，密码加密存储。
+- **密码修改**：支持在线修改登录密码，保障账户安全。
+- **个人信息**：维护姓名、学号/工号、学院/部门、联系方式、头像等信息。
+
+### 商品浏览与搜索
+
+- **商铺详情**：查看商铺基本信息、商品列表、评价内容与营业状态。
+- **搜索商品**：支持按关键词、分类、价格区间搜索商品，支持排序与筛选。
+- **查看公告**：浏览系统发布的最新公告，了解平台动态与活动信息。
+
+### 购物与订单
+
+- **加入购物车**：将心仪商品加入购物车，支持修改数量、删除商品与批量结算。
+- **用户订单**：查看个人所有订单，包括待付款、待发货、待收货、已完成等状态，支持取消订单与确认收货。
+- **收货地址管理**：添加、编辑、删除收货地址，支持设置默认地址。
+- **订单评价**：对已完成的订单进行商品与服务评价，支持打分与文字描述。
+
+### 社区与互动
+
+- **系统论坛**：浏览校园论坛中的帖子，支持按分类筛选与关键词搜索。
+- **发帖回复**：发布新帖子参与讨论，或对他人帖子进行回复互动。
+- **联系客服**：通过内置客服功能与商铺管理员或系统管理员进行沟通，咨询问题或反馈建议。
+
+### 消息通知
+
+- **我的消息**：接收订单状态变更、评价回复、客服消息、系统公告等通知，支持标记已读与删除。
+
+---
+
+## 项目结构
+
+```text
+pharmacy-dispensing-system/
+├── backend/            # 后端 API 服务
+│   ├── src/
+│   │   ├── controllers/  # 控制器
+│   │   ├── models/       # 数据模型
+│   │   ├── routes/       # 路由
+│   │   └── services/     # 业务逻辑
+│   └── package.json
+├── frontend/           # 前端 Web 应用
+│   ├── src/
+│   │   ├── views/      # 页面视图
+│   │   ├── components/ # 公共组件
+│   │   └── store/      # 状态管理
+│   └── package.json
+├── docs/               # 项目文档与 API 接口说明
+├── LICENSE
+└── README.md
+```
+---
 
 
 #### 前台启动方式
@@ -56,32 +184,29 @@ WebStorm OR VScode 编译器 [https://www.jianshu.com/p/d63b5bae9dff]
 #### 默认后台账户密码
 [管理员]
 admin
-1234qwer
-
-[配送员]
-peisong
-1234qwer
+123456
 
 [用户]
 fank
-1234qwer
+123456
 
 #### 项目截图
+|  |  |
+|---------------------|---------------------|
+| ![](./assets/image%20(1).png) | ![](./assets/image%20(2).png) |
+| ![](./assets/image%20(3).png) | ![](./assets/image%20(4).png) |
+| ![](./assets/image%20(5).png) | ![](./assets/image%20(6).png) |
+| ![](./assets/image%20(7).png) | ![](./assets/image%20(8).png) |
+| ![](./assets/image%20(9).png) | ![](./assets/image%20(10).png) |
+| ![](./assets/image%20(11).png) |
 
 |  |  |
 |---------------------|---------------------|
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709524875703.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525198162.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709524847522.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525186348.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709523881765.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525173545.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709523869912.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525157487.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709523815244.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525137717.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709523787799.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525118751.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709524886865.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525044436.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525252181.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525023326.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525238258.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525011621.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525221898.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709524999125.jpg) |
-|![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1709525210792.jpg) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/work/936e9baf53eb9a217af4f89c616dc19.png) |
-
+| ![](./assets/app_image%20(1).png) | ![](./assets/app_image%20(2).png) |
+| ![](./assets/app_image%20(3).png) | ![](./assets/app_image%20(4).png) |
+| ![](./assets/app_image%20(5).png) | ![](./assets/app_image%20(6).png) |
+| ![](./assets/app_image%20(7).png) | ![](./assets/app_image%20(8).png) |
+| ![](./assets/app_image%20(9).png) | ![](./assets/app_image%20(10).png) |
 
 #### 演示视频
 
@@ -99,7 +224,10 @@ WeChat: `Storm_Berserker`
 
 > 项目部署调试不好包退！功能逻辑没讲明白包退！
 
+<div align=center><img align="center" src="./assets/product_word.png" alt="fankekeke" /></div>
+
 #### 其它资源
+[2026年-答辩顺利通过-客户评价🀄](https://berserker287.github.io/2026/06/29/2026%E5%B9%B4%E7%AD%94%E8%BE%A9%E9%A1%BA%E5%88%A9%E9%80%9A%E8%BF%87/)
 
 [2025年-答辩顺利通过-客户评价🍜](https://berserker287.github.io/2025/06/18/2025%E5%B9%B4%E7%AD%94%E8%BE%A9%E9%A1%BA%E5%88%A9%E9%80%9A%E8%BF%87/)
 
@@ -123,4 +251,8 @@ WeChat: `Storm_Berserker`
 
 More info: [悲伤的橘子树](https://berserker287.github.io/)
 
-<p><img align="center" src="https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/%E5%90%88%E4%BD%9C%E7%89%A9%E6%96%99%E6%A0%B7%E5%BC%8F%20(3).png" alt="fankekeke" /></p>
+<div align="center"><img align="center" src="./assets/chat_qr_code.png" alt="fankekeke" width=250 /></div>
+
+<p><img align="center" src="./assets/wechat_group.png" alt="fankekeke" /></p>
+
+**感谢查看**
